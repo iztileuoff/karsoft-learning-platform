@@ -32,6 +32,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'is_admin',
         'password',
         'remember_token',
     ];
@@ -44,6 +45,11 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'first_name' => 'string',
+            'last_name' => 'string',
+            'is_admin' => 'boolean',
+            'phone' => 'string',
+            'email' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'created_at' => 'datetime',
