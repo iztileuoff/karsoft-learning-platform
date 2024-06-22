@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,6 +26,8 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
+        'google_id',
+        'telegram_id',
     ];
 
     /**
@@ -52,6 +55,8 @@ class User extends Authenticatable
             'email' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'google_id' => 'int',
+            'telegram_id' => 'int',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -63,5 +68,10 @@ class User extends Authenticatable
             get: null,
             set: fn($value) => bcrypt($value),
         );
+    }
+
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(Post::class);
     }
 }
