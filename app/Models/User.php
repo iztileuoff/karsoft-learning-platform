@@ -26,6 +26,7 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
+        'post_id',
         'google_id',
         'telegram_id',
     ];
@@ -55,6 +56,7 @@ class User extends Authenticatable
             'email' => 'string',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'post_id' => 'int',
             'google_id' => 'int',
             'telegram_id' => 'int',
             'created_at' => 'datetime',
