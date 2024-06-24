@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api/v1',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->append(\App\Http\Middleware\Api\V1\SetLanguageMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
