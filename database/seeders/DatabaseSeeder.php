@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\V1\AuthorSeeder;
+use Database\Seeders\V1\DegreeSeeder;
 use Database\Seeders\V1\InfoSeeder;
 use Database\Seeders\V1\PostSeeder;
 use Database\Seeders\V1\RegionSeeder;
@@ -19,8 +20,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         $this->call([
             RegionSeeder::class,
             SchoolSeeder::class,
@@ -28,6 +27,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             InfoSeeder::class,
             AuthorSeeder::class,
+            DegreeSeeder::class,
         ]);
     }
 }
