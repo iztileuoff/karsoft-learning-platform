@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-/** @see \App\Models\Post */
+/** @see \App\Models\Region */
 class RegionCollection extends ResourceCollection
 {
     public function toArray(Request $request): array
