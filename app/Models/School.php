@@ -31,4 +31,9 @@ class School extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(School::class);
+    }
 }
