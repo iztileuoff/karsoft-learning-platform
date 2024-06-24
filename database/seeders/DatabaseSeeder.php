@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\V1\PostSeeder;
+use Database\Seeders\V1\RegionSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
+            RegionSeeder::class,
             PostSeeder::class,
         ]);
     }
