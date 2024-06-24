@@ -4,10 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\V1\AuthorSeeder;
 use Database\Seeders\V1\InfoSeeder;
 use Database\Seeders\V1\PostSeeder;
 use Database\Seeders\V1\RegionSeeder;
 use Database\Seeders\V1\SchoolSeeder;
+use Database\Seeders\V1\UserSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,7 +25,9 @@ class DatabaseSeeder extends Seeder
             RegionSeeder::class,
             SchoolSeeder::class,
             PostSeeder::class,
+            UserSeeder::class,
             InfoSeeder::class,
+            AuthorSeeder::class,
         ]);
     }
 }
