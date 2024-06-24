@@ -22,6 +22,7 @@ class Info extends Model
     {
         return [
             'text' => 'string',
+            'mobile' => 'boolean',
         ];
     }
 }

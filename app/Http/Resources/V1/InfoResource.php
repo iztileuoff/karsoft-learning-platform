@@ -12,6 +12,7 @@ class InfoResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'text_translations' => $this->getTranslations('text'),
             'text' => $this->text,
             'mobile' => $this->mobile,
         ];
