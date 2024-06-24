@@ -4,37 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
-class District extends Model
+class School extends Model
 {
     use HasTranslations;
 
     protected $fillable = [
-        'region_id',
+        'district_id',
         'name',
     ];
 
     public array $translatable = [
-        'name',
+        'name'
     ];
 
     protected function casts(): array
     {
         return [
-            'region_id' => 'int',
+            'district_id' => 'int',
             'name' => 'string',
         ];
     }
 
-    public function region(): BelongsTo
+    public function district(): BelongsTo
     {
-        return $this->belongsTo(Region::class);
-    }
-
-    public function schools(): HasMany
-    {
-        return $this->hasMany(School::class);
+        return $this->belongsTo(District::class);
     }
 }
