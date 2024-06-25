@@ -7,6 +7,7 @@ use App\Enums\LanguagesEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Quiz extends Model
 {
@@ -34,5 +35,15 @@ class Quiz extends Model
     public function degree(): BelongsTo
     {
         return $this->belongsTo(Degree::class);
+    }
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function randomQuestions(): HasMany
+    {
+        return $this->hasMany(Question::class)->inRandomOrder();
     }
 }
