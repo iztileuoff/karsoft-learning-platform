@@ -10,6 +10,7 @@ use Database\Seeders\V1\InfoSeeder;
 use Database\Seeders\V1\PostSeeder;
 use Database\Seeders\V1\RegionSeeder;
 use Database\Seeders\V1\SchoolSeeder;
+use Database\Seeders\V1\TextbookSeeder;
 use Database\Seeders\V1\UserSeeder;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             InfoSeeder::class,
             AuthorSeeder::class,
             DegreeSeeder::class,
+            TextbookSeeder::class,
         ]);
     }
 }
