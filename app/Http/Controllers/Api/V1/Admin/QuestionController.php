@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\QuestionRequest;
 use App\Http\Resources\V1\QuestionResource;
 use App\Models\Question;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return QuestionResource::collection(Question::all());
+        $questions = Question::paginate($request->input('per_page', 10));
+
+        return QuestionResource::collection($questions);
     }
 
     public function store(QuestionRequest $request)
