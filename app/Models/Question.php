@@ -14,7 +14,6 @@ class Question extends Model implements HasMedia
     use InteractsWithMedia;
 
     protected $fillable = [
-        'media_id',
         'quiz_id',
         'text',
     ];
@@ -22,7 +21,6 @@ class Question extends Model implements HasMedia
     protected function casts(): array
     {
         return [
-            'media_id' => 'int',
             'quiz_id' => 'string',
             'text' => 'string',
         ];
