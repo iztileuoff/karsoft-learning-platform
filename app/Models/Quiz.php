@@ -26,7 +26,7 @@ class Quiz extends Model
         return [
             'name' => 'string',
             'description' => 'string',
-            'degree_id' => 'int',
+            'degree_id' => DegreesEnum::class,
             'language' => LanguagesEnum::class,
             'number_of_questions' => 'integer',
         ];
