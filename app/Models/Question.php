@@ -16,6 +16,7 @@ class Question extends Model implements HasMedia
     protected $fillable = [
         'quiz_id',
         'text',
+        'options',
     ];
 
     protected function casts(): array
@@ -23,26 +24,12 @@ class Question extends Model implements HasMedia
         return [
             'quiz_id' => 'string',
             'text' => 'string',
+            'options' => 'array',
         ];
     }
 
     public function quiz(): BelongsTo
     {
         return $this->belongsTo(Quiz::class);
-    }
-
-    public function options(): HasMany
-    {
-        return $this->hasMany(Option::class);
-    }
-
-    public function correctOption(): HasOne
-    {
-        return $this->hasOne(Option::class)->where('correct', true);
-    }
-
-    public function randomOptions(): HasMany
-    {
-        return $this->hasMany(Option::class)->inRandomOrder();
     }
 }

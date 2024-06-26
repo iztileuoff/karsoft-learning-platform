@@ -22,5 +22,4 @@ Route::group([
     Route::apiResource('textbooks', TextbookController::class);
     Route::apiResource('quizzes', QuizController::class);
     Route::apiResource('questions', QuestionController::class);
-    Route::apiResource('options', OptionController::class);
 });

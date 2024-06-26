@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignUlid('quiz_id')->constrained()->cascadeOnDelete();
             $table->text('text')->nullable();
+            $table->json('options')->nullable();
             $table->timestamps();
         });
     }
