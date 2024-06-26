@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,6 +27,11 @@ class Question extends Model implements HasMedia
             'text' => 'string',
             'options' => 'array',
         ];
+    }
+
+    public function scopeName(Builder $query, $search): void
+    {
+        $query->where('text', 'like', "%$search%");
     }
 
     public function quiz(): BelongsTo
