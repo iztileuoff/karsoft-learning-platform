@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('options', function (Blueprint $table) {
-            $table->ulid('id');
+            $table->ulid('id')->primary();
             $table->foreignId('question_id')->constrained()->cascadeOnDelete();
             $table->text('text')->nullable();
             $table->boolean('correct')->default(false);

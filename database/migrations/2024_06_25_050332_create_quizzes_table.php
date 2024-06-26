@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('quizzes', function (Blueprint $table) {
-            $table->ulid('id');
+            $table->ulid('id')->primary();
             $table->string('name');
             $table->text('description');
             $table->foreignId('degree_id')->nullable()->constrained()->nullOnDelete();
