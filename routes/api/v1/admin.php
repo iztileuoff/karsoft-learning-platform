@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\V1\Admin\AuthorController;
 use App\Http\Controllers\Api\V1\Admin\DegreeController;
 use App\Http\Controllers\Api\V1\Admin\InfoController;
-use App\Http\Controllers\Api\V1\Admin\OptionController;
 use App\Http\Controllers\Api\V1\Admin\PostController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
