@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Api\V1\Front;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\DistrictCollection;
-use App\Http\Resources\V1\PostCollection;
+use App\Http\Resources\V1\Admin\DistrictCollection;
 use App\Models\District;
-use App\Models\Post;
 use Illuminate\Http\Request;
 
 class DistrictController extends Controller

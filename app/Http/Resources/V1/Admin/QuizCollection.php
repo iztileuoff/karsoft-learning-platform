@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\V1\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-/** @see \App\Models\Post */
-class PostCollection extends ResourceCollection
+/** @see \App\Models\Quiz */
+class QuizCollection extends ResourceCollection
 {
     public function toArray(Request $request): array
     {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\DistrictCollection;
+use App\Http\Resources\V1\Admin\DistrictCollection;
 use App\Models\District;
 use Illuminate\Http\Request;
 

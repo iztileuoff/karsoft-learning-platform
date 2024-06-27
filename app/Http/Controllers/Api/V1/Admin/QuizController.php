@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\QuizRequest;
-use App\Http\Resources\V1\QuizResource;
+use App\Http\Resources\V1\Admin\QuizResource;
 use App\Models\Quiz;
 
 class QuizController extends Controller

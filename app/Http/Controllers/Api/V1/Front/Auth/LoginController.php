@@ -5,11 +5,8 @@ namespace App\Http\Controllers\Api\V1\Front\Auth;
 use App\Actions\Front\LoginUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Front\LoginRequest;
-use App\Http\Resources\V1\UserResource;
-use App\Models\User;
+use App\Http\Resources\V1\Admin\UserResource;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {

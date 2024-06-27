@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\UpdateInfoRequest;
-use App\Http\Resources\V1\InfoCollection;
-use App\Http\Resources\V1\InfoResource;
+use App\Http\Resources\V1\Admin\InfoCollection;
+use App\Http\Resources\V1\Admin\InfoResource;
 use App\Models\Info;
 use Illuminate\Http\Request;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\V1\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Lesson */
-class LessonResource extends JsonResource
+/** @mixin \App\Models\Post */
+class PostResource extends JsonResource
 {
     public function toArray(Request $request): array
     {

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Resources\V1;
+namespace App\Http\Resources\V1\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\School */
-class SchoolResource extends JsonResource
+/** @mixin \App\Models\District */
+class DistrictResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'district_id' => $this->district_id,
-            'district' => new DistrictResource($this->whenLoaded('district')),
+            'region_id' => $this->region_id,
+            'region' => new RegionResource($this->whenLoaded('region')),
             'name' => $this->name,
         ];
     }
