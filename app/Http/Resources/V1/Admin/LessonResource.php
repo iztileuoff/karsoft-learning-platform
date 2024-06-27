@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Admin;
 
+use App\Http\Resources\V1\MediaResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,6 +14,7 @@ class LessonResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'video' => new MediaResource($this->getFirstMedia('video'))
         ];
     }
 }

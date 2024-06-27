@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\Api\V1\Admin\AuthorController;
 use App\Http\Controllers\Api\V1\Admin\DegreeController;
+use App\Http\Controllers\Api\V1\Admin\DistrictController;
 use App\Http\Controllers\Api\V1\Admin\InfoController;
 use App\Http\Controllers\Api\V1\Admin\LessonController;
 use App\Http\Controllers\Api\V1\Admin\PostController;
 use App\Http\Controllers\Api\V1\Admin\ProfileController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
+use App\Http\Controllers\Api\V1\Admin\SchoolController;
 use App\Http\Controllers\Api\V1\Admin\TextbookController;
 use App\Http\Controllers\Api\V1\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +21,8 @@ Route::group([
 ], function () {
     Route::apiSingleton('profile', ProfileController::class);
 
+    Route::apiResource('schools', SchoolController::class);
+    Route::apiResource('districts', DistrictController::class);
     Route::apiResource('users', UserController::class);
     Route::apiResource('posts', PostController::class)->only('index');
     Route::apiResource('authors', AuthorController::class);
