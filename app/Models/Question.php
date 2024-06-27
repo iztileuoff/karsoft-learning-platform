@@ -10,10 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Question extends Model implements HasMedia
+class Question extends Model
 {
-    use InteractsWithMedia;
-
     protected $fillable = [
         'quiz_id',
         'text',
