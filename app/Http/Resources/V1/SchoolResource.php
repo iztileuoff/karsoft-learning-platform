@@ -13,6 +13,7 @@ class SchoolResource extends JsonResource
         return [
             'id' => $this->id,
             'district_id' => $this->district_id,
+            'district' => new DistrictResource($this->whenLoaded('district')),
             'name' => $this->name,
         ];
     }
