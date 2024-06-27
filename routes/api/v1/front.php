@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Front\InfoController;
 use App\Http\Controllers\Api\V1\Front\LessonController;
 use App\Http\Controllers\Api\V1\Front\PostController;
 use App\Http\Controllers\Api\V1\Front\ProfileController;
+use App\Http\Controllers\Api\V1\Front\QuizController;
 use App\Http\Controllers\Api\V1\Front\SchoolController;
 use App\Http\Controllers\Api\V1\Front\TextbookController;
 use Illuminate\Support\Facades\Route;
