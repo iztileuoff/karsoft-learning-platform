@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Front\AuthorController;
 use App\Http\Controllers\Api\V1\Front\DistrictController;
 use App\Http\Controllers\Api\V1\Front\InfoController;
 use App\Http\Controllers\Api\V1\Front\PostController;
@@ -17,7 +18,7 @@ Route::group([
     Route::get('info', InfoController::class)->name('info');
     Route::apiSingleton('profile', ProfileController::class);
 
-    Route::apiResource('authors', AuthorController::class);
+    Route::apiResource('authors', AuthorController::class)->only('index', 'show');
     Route::apiResource('textbooks', TextbookController::class)->only('index', 'show');
     Route::apiResource('quizzes', QuizController::class)->only('index', 'show');
 });
