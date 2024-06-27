@@ -7,6 +7,7 @@ use App\Models\User;
 use Database\Seeders\V1\AuthorSeeder;
 use Database\Seeders\V1\DegreeSeeder;
 use Database\Seeders\V1\InfoSeeder;
+use Database\Seeders\V1\LessonSeeder;
 use Database\Seeders\V1\PostSeeder;
 use Database\Seeders\V1\QuizSeeder;
 use Database\Seeders\V1\RegionSeeder;
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
             DegreeSeeder::class,
             TextbookSeeder::class,
             QuizSeeder::class,
+            LessonSeeder::class,
         ]);
     }
 }
