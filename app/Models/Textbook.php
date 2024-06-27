@@ -11,7 +11,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Textbook extends Model implements HasMedia
 {
-    use HasUlids, InteractsWithMedia;
+    use InteractsWithMedia;
 
     protected $fillable = [
         'name',
