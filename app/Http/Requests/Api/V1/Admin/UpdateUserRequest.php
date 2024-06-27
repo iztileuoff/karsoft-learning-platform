@@ -15,7 +15,7 @@ class UpdateUserRequest extends FormRequest
             'last_name' => ['string', 'max:200'],
             'phone' => ['string', 'regex:/^998([0-9][012345789]|[0-9][125679]|7[01234569])[0-9]{7}$/', Rule::unique('users', 'phone')],
             'password' => ['string', 'min:8', 'max:64'],
-            'district_id' => ['required_if:school_id', Rule::exists('districts', 'id')],
+            'district_id' => ['required_with:school_id', Rule::exists('districts', 'id')],
             'school_id' => [Rule::exists('schools', 'id')->where(function (Builder $query) {
                 $query->where('district_id', $this->district_id);
             })],
