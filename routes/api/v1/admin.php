@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Admin\DegreeController;
 use App\Http\Controllers\Api\V1\Admin\InfoController;
 use App\Http\Controllers\Api\V1\Admin\LessonController;
 use App\Http\Controllers\Api\V1\Admin\PostController;
+use App\Http\Controllers\Api\V1\Admin\ProfileController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
 use App\Http\Controllers\Api\V1\Admin\TextbookController;
@@ -16,6 +17,8 @@ Route::group([
     'as'         => 'admin.',
     'middleware' => 'auth:sanctum',
 ], function () {
+    Route::apiSingleton('profile', ProfileController::class);
+
     Route::apiResource('users', UserController::class)->only('index', 'show');
     Route::apiResource('posts', PostController::class)->only('index');
     Route::apiResource('authors', AuthorController::class);

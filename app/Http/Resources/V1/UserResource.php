@@ -16,7 +16,6 @@ class UserResource extends JsonResource
             'last_name' => $this->last_name,
             'full_name' => $this->full_name,
             'phone' => $this->phone,
-            'email' => $this->email,
             'post_id' => $this->post_id,
             'post' => new PostResource($this->whenLoaded('post')),
             'school_id' => $this->school_id,
