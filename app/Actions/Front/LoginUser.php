@@ -2,7 +2,7 @@
 
 namespace App\Actions\Front;
 
-use App\Http\Requests\Api\V1\Admin\LoginRequest;
+use App\Http\Requests\Api\V1\Front\LoginRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
