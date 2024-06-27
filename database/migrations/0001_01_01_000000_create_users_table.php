@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->foreignId('post_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('district_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('school_id')->nullable()->constrained()->nullOnDelete();
             $table->string('google_id')->nullable();
             $table->string('telegram_id')->nullable();
