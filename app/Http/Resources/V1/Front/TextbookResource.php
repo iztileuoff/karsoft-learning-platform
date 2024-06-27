@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\V1\Admin;
+namespace App\Http\Resources\V1\Front;
 
 use App\Http\Resources\V1\MediaResource;
 use Illuminate\Http\Request;
