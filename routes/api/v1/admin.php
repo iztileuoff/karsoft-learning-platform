@@ -19,7 +19,7 @@ Route::group([
 ], function () {
     Route::apiSingleton('profile', ProfileController::class);
 
-    Route::apiResource('users', UserController::class)->only('index', 'show');
+    Route::apiResource('users', UserController::class);
     Route::apiResource('posts', PostController::class)->only('index');
     Route::apiResource('authors', AuthorController::class);
     Route::apiResource('infos', InfoController::class)->only('index', 'show', 'update');
