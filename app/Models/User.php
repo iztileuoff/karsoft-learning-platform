@@ -74,6 +74,14 @@ class User extends Authenticatable
         );
     }
 
+    public function fullName(): Attribute
+    {
+        return new Attribute(
+            get: fn($value, $attributes) => $attributes['first_name'] . ' ' . $attributes['last_name'],
+            set: null,
+        );
+    }
+
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
