@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Front\SchoolRequest;
-use App\Http\Resources\V1\Admin\SchoolCollection;
+use App\Http\Resources\V1\Front\SchoolCollection;
 use App\Models\School;
 
 class SchoolController extends Controller
