@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Admin\PostController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
 use App\Http\Controllers\Api\V1\Admin\TextbookController;
+use App\Http\Controllers\Api\V1\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -15,6 +16,7 @@ Route::group([
     'as'         => 'admin.',
     'middleware' => 'auth:sanctum',
 ], function () {
+    Route::apiResource('users', UserController::class)->only('index', 'show');
     Route::apiResource('posts', PostController::class)->only('index');
     Route::apiResource('authors', AuthorController::class);
     Route::apiResource('infos', InfoController::class)->only('index', 'show', 'update');
