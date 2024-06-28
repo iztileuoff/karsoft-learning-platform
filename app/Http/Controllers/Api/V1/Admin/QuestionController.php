@@ -46,9 +46,12 @@ class QuestionController extends Controller
 
         // Generate ULID for each option's number field
         $options = collect($validated['options'])->map(function ($option) {
-            $option['number'] = Str::ulid()->toString();
-            return $option;
-        })->only('number', 'text', 'correct')->toArray();
+            return [
+                'number' => Str::ulid()->toString(),
+                'text' => $option['text'],
+                'correct' => $option['correct'],
+            ];
+        })->toArray();
 
 
         // Handle option images
@@ -82,9 +85,12 @@ class QuestionController extends Controller
 
         // Generate ULID for each option's number field
         $options = collect($validated['options'])->map(function ($option) {
-            $option['number'] = Str::ulid()->toString();
-            return $option;
-        })->only('number', 'text', 'correct')->toArray();
+            return [
+                'number' => Str::ulid()->toString(),
+                'text' => $option['text'],
+                'correct' => $option['correct'],
+            ];
+        })->toArray();
 
         $question->update([
             'text' => $validated['text'],
