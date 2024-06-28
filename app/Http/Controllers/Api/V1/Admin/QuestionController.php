@@ -60,7 +60,7 @@ class QuestionController extends Controller
                 $optionMedia = $question->addMedia($option['image'])->toMediaCollection('option_images');
                 $options[$key]['image_url'] = $optionMedia->getUrl();
             } else {
-                $options[$key]['image_url'] = null;
+                $options[$key]['image_url'] = "";
             }
         }
 
