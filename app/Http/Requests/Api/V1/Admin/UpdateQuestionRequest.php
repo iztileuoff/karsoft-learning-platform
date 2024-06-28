@@ -17,7 +17,7 @@ class UpdateQuestionRequest extends FormRequest
             'options' => ['nullable', 'array', 'min:4'],
             'options.*.text' => ['required_without:options.*.image_url', 'string', 'max:1000'],
             'options.*.correct' => ['required', 'boolean'],
-            'options.*.image_url' => ['nullable'],
+            'options.*.image_url' => ['string', 'url'],
         ];
     }
 
