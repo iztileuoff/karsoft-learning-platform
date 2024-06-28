@@ -32,13 +32,15 @@ class UpdateQuestionRequest extends FormRequest
         $validator->after(function ($validator) {
             $options = $this->input('options');
 
-            // Check if only one option is marked as correct
-            $correctCount = collect($options)->filter(function ($option) {
-                return $option['correct'] === true;
-            })->count();
+            if (isset($options)) {
+                // Check if only one option is marked as correct
+                $correctCount = collect($options)->filter(function ($option) {
+                    return $option['correct'] === true;
+                })->count();
 
-            if ($correctCount !== 1) {
-                $validator->errors()->add('options', 'There must be exactly one correct option.');
+                if ($correctCount !== 1) {
+                    $validator->errors()->add('options', 'There must be exactly one correct option.');
+                }
             }
         });
     }
