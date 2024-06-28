@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\TestRequest;
-use App\Http\Resources\V1\Front\TestCollection;
-use App\Http\Resources\V1\Front\TestResource;
+use App\Http\Resources\V1\Admin\TestCollection;
+use App\Http\Resources\V1\Admin\TestResource;
 use App\Models\Test;
-use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
