@@ -100,6 +100,8 @@ class QuestionController extends Controller
         $question->save();
 
         if ($request->hasFile('image')) {
+            $question->clearMediaCollection('image');
+
             $question->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
