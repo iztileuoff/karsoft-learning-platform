@@ -89,7 +89,7 @@ class QuestionController extends Controller
                 'number' => Str::ulid()->toString(),
                 'text' => $option['text'],
                 'correct' => $option['correct'],
-                'image_url' => $option['image_url'],
+                'image_url' => $option['image_url'] ?? "",
             ];
         })->toArray();
 
