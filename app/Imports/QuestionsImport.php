@@ -20,24 +20,28 @@ class QuestionsImport
                     'number' => Str::ulid()->toString(),
                     'text' => $row['option1'],
                     'correct' => true,
+                    'image_url' => "",
                 ];
 
                 $options[] = [
                     'number' => Str::ulid()->toString(),
                     'text' => $row['option2'],
                     'correct' => false,
+                    'image_url' => "",
                 ];
 
                 $options[] = [
                     'number' => Str::ulid()->toString(),
                     'text' => $row['option3'],
                     'correct' => false,
+                    'image_url' => "",
                 ];
 
                 $options[] = [
                     'number' => Str::ulid()->toString(),
                     'text' => $row['option4'],
                     'correct' => false,
+                    'image_url' => "",
                 ];
 
                 if (in_array($quiz->degree_id, [DegreesEnum::degree5, DegreesEnum::degree6])) {
@@ -45,6 +49,7 @@ class QuestionsImport
                         'number' => Str::ulid()->toString(),
                         'text' => $row['option5'],
                         'correct' => false,
+                        'image_url' => "",
                     ];
                 }
 
