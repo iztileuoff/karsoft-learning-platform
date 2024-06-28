@@ -9,14 +9,11 @@ class TestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quiz_id' => ['required', 'integer'],
-            'user_id' => ['required', 'integer'],
-            'started_at' => ['nullable', 'date'],
-            'finished_at' => ['nullable', 'date'],
-            'time_spent' => ['nullable', 'integer'],
-            'questions_count' => ['nullable', 'integer'],
-            'correct_questions_count' => ['nullable', 'integer'],
-            'data_questions' => ['nullable'],
+            'quiz_id' => ['integer'],
+            'user_id' => ['integer'],
+            'from_date' => ['nullable', 'date_format:Y-m-d'],
+            'to_date' => ['nullable', 'date_format:Y-m-d', 'after_or_equal:from_date'],
+            'per_page' => ['required', 'integer', 'min:10', 'max:100']
         ];
     }
 

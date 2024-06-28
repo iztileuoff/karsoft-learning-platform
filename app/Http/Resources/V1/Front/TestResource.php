@@ -11,17 +11,17 @@ class TestResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'id' => $this->id,
             'quiz_id' => $this->quiz_id,
+            'quiz' => new QuizResource($this->whenLoaded('quiz')),
             'user_id' => $this->user_id,
-            'started_at' => $this->started_at,
-            'finished_at' => $this->finished_at,
+            'user' => new UserResource($this->whenLoaded('user')),
+            'started_at' => $this->started_at?->format('Y-m-d H:i:s'),
+            'finished_at' => $this->finished_at?->format('Y-m-d H:i:s'),
             'time_spent' => $this->time_spent,
             'questions_count' => $this->questions_count,
             'correct_questions_count' => $this->correct_questions_count,
-            'data_questions' => $this->data_questions,
+            'data_questions' => $this->when(! $request->routeIs('*.index'), $this->data_questions),
         ];
     }
 }

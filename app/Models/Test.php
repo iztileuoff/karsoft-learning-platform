@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Test extends Model
 {
@@ -14,15 +15,31 @@ class Test extends Model
         'time_spent',
         'questions_count',
         'correct_questions_count',
+        'percent',
         'data_questions',
     ];
 
-    protected function casts()
+    protected function casts(): array
     {
         return [
-            'started_at' => 'timestamp',
-            'finished_at' => 'timestamp',
+            'quiz_id' => 'string',
+            'user_id' => 'int',
+            'started_at' => 'datetime',
+            'finished_at' => 'datetime',
+            'time_spent' => 'integer',
+            'questions_count' => 'integer',
+            'correct_questions_count' => 'integer',
             'data_questions' => 'array',
         ];
+    }
+
+    public function quiz(): BelongsTo
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

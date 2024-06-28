@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\Admin\ProfileController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
 use App\Http\Controllers\Api\V1\Admin\SchoolController;
+use App\Http\Controllers\Api\V1\Admin\TestController;
 use App\Http\Controllers\Api\V1\Admin\TextbookController;
 use App\Http\Controllers\Api\V1\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,5 @@ Route::group([
     Route::apiResource('quizzes', QuizController::class);
     Route::apiResource('questions', QuestionController::class);
     Route::apiResource('lessons', LessonController::class);
+    Route::apiResource('tests', TestController::class)->only('index', 'show');
 });

@@ -9,13 +9,14 @@ return new class extends Migration {
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
-            $table->integer('quiz_id');
-            $table->integer('user_id');
-            $table->timestamp('started_at')->nullable();
+            $table->foreignUlid('quiz_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->timestamp('started_at')->nullable()->useCurrent();
             $table->timestamp('finished_at')->nullable();
-            $table->unsignedInteger('time_spent')->nullable();
-            $table->unsignedTinyInteger('questions_count')->nullable();
-            $table->unsignedTinyInteger('correct_questions_count')->nullable();
+            $table->unsignedSmallInteger('time_spent')->nullable();
+            $table->unsignedSmallInteger('questions_count')->nullable();
+            $table->unsignedSmallInteger('correct_questions_count')->nullable();
+            $table->decimal('percent', 5, 2)->nullable();
             $table->json('data_questions')->nullable();
             $table->timestamps();
         });
