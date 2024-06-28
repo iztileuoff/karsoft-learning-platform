@@ -9,8 +9,8 @@ class TestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'quiz_id' => ['integer'],
-            'user_id' => ['integer'],
+            'quiz_id' => ['nullable', 'integer'],
+            'user_id' => ['nullable', 'integer'],
             'from_date' => ['nullable', 'date_format:Y-m-d'],
             'to_date' => ['nullable', 'date_format:Y-m-d', 'after_or_equal:from_date'],
             'per_page' => ['required', 'integer', 'min:10', 'max:100']
