@@ -12,9 +12,9 @@ class UpdateQuestionRequest extends FormRequest
     {
         return [
             'quiz_id' => [Rule::exists('quizzes', 'id')],
-            'text' => ['required', 'required', 'string', 'max:1000'],
+            'text' => ['string', 'max:1000'],
             'image' => ['nullable', 'image', 'max:2048'],
-            'options' => ['required', 'array', 'min:4'],
+            'options' => ['nullable', 'array', 'min:4'],
             'options.*.text' => ['required_without:options.*.image_url', 'string', 'max:1000'],
             'options.*.correct' => ['required', 'boolean'],
             'options.*.image_url' => ['nullable'],

@@ -83,20 +83,21 @@ class QuestionController extends Controller
     {
         $validated = $request->validated();
 
-        // Generate ULID for each option's number field
-        $options = collect($validated['options'])->map(function ($option) {
-            return [
-                'number' => Str::ulid()->toString(),
-                'text' => $option['text'],
-                'correct' => $option['correct'],
-                'image_url' => $option['image_url'] ?? "",
-            ];
-        })->toArray();
+        if (isset($validated['options'])) {
+            $options = collect($validated['options'])->map(function ($option) {
+                return [
+                    'number' => Str::ulid()->toString(),
+                    'text' => $option['text'],
+                    'correct' => $option['correct'],
+                    'image_url' => $option['image_url'] ?? "",
+                ];
+            })->toArray();
 
-        $question->update([
-            'text' => $validated['text'],
-            'options' => $options,
-        ]);
+            $question->options = $options;
+        }
+
+        $question->text = $validated['text'];
+        $question->save();
 
         if ($request->hasFile('image')) {
             $question->addMediaFromRequest('image')->toMediaCollection('image');
