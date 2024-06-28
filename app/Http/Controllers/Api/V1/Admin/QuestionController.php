@@ -10,6 +10,8 @@ use App\Http\Resources\V1\Admin\QuestionResource;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class QuestionController extends Controller
 {
@@ -25,21 +27,42 @@ class QuestionController extends Controller
         return new QuestionCollection($questions);
     }
 
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
     public function store(StoreQuestionRequest $request)
     {
         $validated = $request->validated();
+
+        $question = Question::create([
+            'quiz_id' => $validated['quiz_id'],
+            'text' => $validated['text'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $question->addMediaFromRequest('image')->toMediaCollection('image');
+        }
 
         // Generate ULID for each option's number field
         $options = collect($validated['options'])->map(function ($option) {
             $option['number'] = Str::ulid()->toString();
             return $option;
-        })->toArray();
+        })->only('number', 'text', 'correct')->toArray();
 
-        $question = Question::create([
-            'quiz_id' => $validated['quiz_id'],
-            'text' => $validated['text'],
-            'options' => $options,
-        ]);
+
+        // Handle option images
+        foreach ($request->options as $key => $option) {
+            if (isset($option['image'])) {
+                $optionMedia = $question->addMedia($option['image'])->toMediaCollection('option_images');
+                $options[$key]['image_url'] = $optionMedia->getUrl();
+            } else {
+                $options[$key]['image_url'] = null;
+            }
+        }
+
+        $question->options = $options;
+        $question->save();
 
         return new QuestionResource($question);
     }
@@ -49,6 +72,10 @@ class QuestionController extends Controller
         return new QuestionResource($question);
     }
 
+    /**
+     * @throws FileIsTooBig
+     * @throws FileDoesNotExist
+     */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
         $validated = $request->validated();
@@ -57,12 +84,16 @@ class QuestionController extends Controller
         $options = collect($validated['options'])->map(function ($option) {
             $option['number'] = Str::ulid()->toString();
             return $option;
-        })->toArray();
+        })->only('number', 'text', 'correct')->toArray();
 
         $question->update([
             'text' => $validated['text'],
             'options' => $options,
         ]);
+
+        if ($request->hasFile('image')) {
+            $question->addMediaFromRequest('image')->toMediaCollection('image');
+        }
 
         return new QuestionResource($question);
     }

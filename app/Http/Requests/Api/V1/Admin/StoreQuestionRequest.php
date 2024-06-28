@@ -13,9 +13,11 @@ class StoreQuestionRequest extends FormRequest
         return [
             'quiz_id' => ['required', Rule::exists('quizzes', 'id')],
             'text' => ['required', 'required', 'string', 'max:1000'],
+            'image' => ['nullable', 'image', 'max:2048'],
             'options' => ['required', 'array', 'min:4'],
-            'options.*.text' => ['required', 'string', 'max:1000'],
+            'options.*.text' => ['required_without:options.*.image', 'string', 'max:1000'],
             'options.*.correct' => ['required', 'boolean'],
+            'options.*.image' => ['nullable', 'image', 'max:2048'],
         ];
     }
 
