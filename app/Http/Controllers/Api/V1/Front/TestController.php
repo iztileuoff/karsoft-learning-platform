@@ -75,7 +75,7 @@ class TestController extends Controller
 
         $questionsCount = collect($questions)->count();
 
-        if ($questionsCount !== $quiz->questions_count) {
+        if ($questionsCount != $quiz->questions_count) {
             throw ValidationException::withMessages([
                 'questions' => 'Please, send all questions. Questions count must be: ' . $questionsCount
             ]);
