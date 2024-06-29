@@ -25,4 +25,5 @@ Route::group([
     Route::apiResource('textbooks', TextbookController::class)->only('index', 'show');
     Route::apiResource('lessons', LessonController::class)->only('index', 'show');
     Route::apiResource('quizzes', QuizController::class)->only('index', 'show');
+    Route::apiResource('tests', Test::class)->only('index', 'show');
 });

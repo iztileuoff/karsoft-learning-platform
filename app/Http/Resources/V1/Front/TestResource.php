@@ -21,7 +21,8 @@ class TestResource extends JsonResource
             'time_spent' => $this->time_spent,
             'questions_count' => $this->questions_count,
             'correct_questions_count' => $this->correct_questions_count,
-            'data_questions' => $this->when(! $request->routeIs('*.index'), $this->data_questions),
+            'questions' => $this->when(! $request->routeIs('*.index'), $this->when($this->finished_at === null, $this->getOnlyNumberAndTextQuestionsOptions())),
+            'data_questions' => $this->when(! $request->routeIs('*.index'), $this->when($this->finished_at !== null, $this->data_questions)),
         ];
     }
 }

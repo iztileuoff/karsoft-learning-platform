@@ -42,4 +42,25 @@ class Test extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getOnlyNumberAndTextQuestionsOptions(): ?\Illuminate\Support\Collection
+    {
+        if (isset($this->data_questions)) {
+            return collect($this->data_questions)->map(function ($question) {
+                return [
+                    'id' => $question->id,
+                    'quiz_id' => $question->quiz_id,
+                    'text' => $question->text,
+                    'options' => collect($question->options)->map(function ($option) {
+                        return [
+                            'number' => $option['number'],
+                            'text' => $option['text'],
+                        ];
+                    })
+                ];
+            });
+        }
+
+        return null;
+    }
 }
