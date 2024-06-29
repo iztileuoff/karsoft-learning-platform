@@ -17,6 +17,7 @@ class QuizResource extends JsonResource
             'degree_id' => $this->degree_id,
             'degree' => new DegreeResource($this->whenLoaded('degree')),
             'language' => $this->language,
+            'questions_count' => $this->whenCounted('questions'),
             'number_of_questions' => $this->number_of_questions,
         ];
     }

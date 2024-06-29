@@ -45,6 +45,12 @@ class TestController extends Controller
         $randomQuestionsCount = $randomQuestions->count();
         $dataQuestions = QuestionResource::collection($randomQuestions);
 
+        if ($randomQuestionsCount == 0) {
+            throw ValidationException::withMessages([
+                'quiz' => 'Bul testke sorawlar tolıq qosılmadı.',
+            ]);
+        }
+
         $validated['questions_count'] = $randomQuestionsCount;
         $validated['data_questions'] = $dataQuestions;
 

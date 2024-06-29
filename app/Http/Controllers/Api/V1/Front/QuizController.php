@@ -13,6 +13,7 @@ class QuizController extends Controller
     public function index(Request $request)
     {
         $quizzes = Quiz::with('degree')
+            ->withCount('questions')
             ->paginate($request->input('per_page', 10));
 
         return new QuizCollection($quizzes);
