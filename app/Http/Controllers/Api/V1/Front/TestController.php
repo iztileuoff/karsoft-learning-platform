@@ -71,24 +71,15 @@ class TestController extends Controller
         $quiz = Quiz::find($test->quiz_id);
 
         $validated = $request->validated();
-        $questions = $validated['questions'];
+        $questions = collect($validated['questions']);
         $dataQuestions = collect($test->data_questions);
 
-        $questionsCount = collect($questions)->count();
+        $questionsCount = $questions->count();
         $dataQuestionsCount = $dataQuestions->count();
 
         if ($questionsCount != $dataQuestionsCount) {
             throw ValidationException::withMessages([
                 'questions' => 'Please, send all questions. Questions count must be: ' . $dataQuestionsCount
-            ]);
-        }
-
-        $questionIds = collect($questions)->sortBy('id')->pluck('id');
-        $dataQuestionIds = $dataQuestions->sortBy('id')->pluck('id');
-
-        if ($questionIds !== $dataQuestionIds) {
-            throw ValidationException::withMessages([
-                'questions' => 'Please, send all questions correctly.'
             ]);
         }
 

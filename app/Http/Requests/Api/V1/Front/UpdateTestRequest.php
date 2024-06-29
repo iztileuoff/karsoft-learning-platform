@@ -11,7 +11,13 @@ class UpdateTestRequest extends FormRequest
     {
         return [
             'questions' => ['required', 'array'],
-            'questions.*.id' => ['required', 'integer'],
+            'questions.*.id' => ['required', 'integer', function ($attribute, $value, $fail) {
+                $questionIds = array_column($this->test->data_questions, 'id');
+
+                if (!in_array($value, $questionIds)) {
+                    return $fail("Invalid question ID: {$value}");
+                }
+            },],
             'questions.*.option_number' => ['required', 'string'],
             'finished_at' => ['nullable'],
             'time_spent' => ['nullable'],
