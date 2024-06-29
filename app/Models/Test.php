@@ -14,7 +14,7 @@ class Test extends Model
         'finished_at',
         'time_spent',
         'questions_count',
-        'correct_questions_count',
+        'correct_answers_count',
         'percent',
         'data_questions',
     ];
@@ -28,7 +28,7 @@ class Test extends Model
             'finished_at' => 'datetime',
             'time_spent' => 'integer',
             'questions_count' => 'integer',
-            'correct_questions_count' => 'integer',
+            'correct_answers_count' => 'integer',
             'data_questions' => 'array',
         ];
     }

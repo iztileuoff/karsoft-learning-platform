@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->timestamp('finished_at')->nullable();
             $table->string('time_spent')->nullable();
             $table->unsignedSmallInteger('questions_count')->nullable();
-            $table->unsignedSmallInteger('correct_questions_count')->nullable();
+            $table->unsignedSmallInteger('correct_answers_count')->nullable();
             $table->decimal('percent', 5, 2)->nullable();
             $table->json('data_questions')->nullable();
             $table->timestamps();

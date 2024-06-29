@@ -76,13 +76,13 @@ class TestController extends Controller
         Gate::authorize('update', $test);
 
         $validated = $request->validated();
-        $questions = collect($validated['questions']);
+        $answers = collect($validated['answers']);
         $dataQuestions = collect($test->data_questions);
 
-        $questionsCount = $questions->count();
+        $answersCount = $answers->count();
         $dataQuestionsCount = $dataQuestions->count();
 
-        if ($questionsCount != $dataQuestionsCount) {
+        if ($answersCount != $dataQuestionsCount) {
             throw ValidationException::withMessages([
                 'questions' => 'Please, send all questions. Questions count must be: ' . $dataQuestionsCount
             ]);
@@ -90,20 +90,20 @@ class TestController extends Controller
 
         $answeredQuestions = [];
 
-        foreach ($questions as $question) {
-            $dataQuestion = $dataQuestions->where('id', $question['id'])->first();
+        foreach ($answers as $answer) {
+            $dataQuestion = $dataQuestions->where('id', $answer['id'])->first();
 
             $options = collect($dataQuestion['options']);
 
             $dataQuestion['correct_option'] = $options->where('correct', true)->first();
 
-            $options = $options->map(function ($option) use ($question) {
+            $options = $options->map(function ($option) use ($answer) {
                 return [
                     'number' => $option['number'],
                     'text' => $option['text'],
                     'correct' => $option['correct'],
                     'image_url' => $option['image_url'],
-                    'is_selected' => $question['option_number'] == $option['number'],
+                    'is_selected' => $answer['option_number'] == $option['number'],
                 ];
             });
 
@@ -118,8 +118,8 @@ class TestController extends Controller
 
         $validated['data_questions'] = $answeredQuestions;
         $validated['time_spent'] = $started_at->diffInSeconds($finished_at);
-        $validated['correct_questions_count'] = collect($answeredQuestions)->where('correct_answer', true)->count();
-        $validated['percent'] = (100 * $validated['correct_questions_count']) / $dataQuestionsCount;
+        $validated['correct_answers_count'] = collect($answeredQuestions)->where('correct_answer', true)->count();
+        $validated['percent'] = (100 * $validated['correct_answers_count']) / $dataQuestionsCount;
 
         $test->update($validated);
 

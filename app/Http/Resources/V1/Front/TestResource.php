@@ -22,7 +22,7 @@ class TestResource extends JsonResource
             'questions_count' => $this->questions_count,
             'correct_questions_count' => $this->correct_questions_count,
             'questions' => $this->when(! $request->routeIs('*.index'), $this->when($this->finished_at === null, $this->getOnlyNumberAndTextQuestionsOptions())),
-            'data_questions' => $this->when(! $request->routeIs('*.index'), $this->when($this->finished_at !== null, $this->data_questions)),
+            'answers' => $this->when(! $request->routeIs('*.index'), $this->when($this->finished_at !== null, $this->data_questions)),
         ];
     }
 }
