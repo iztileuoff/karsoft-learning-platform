@@ -38,4 +38,9 @@ class Question extends Model implements HasMedia
     {
         return $this->belongsTo(Quiz::class);
     }
+
+    public function getRandomOptions(): \Illuminate\Support\Collection
+    {
+        return collect($this->options)->shuffle();
+    }
 }

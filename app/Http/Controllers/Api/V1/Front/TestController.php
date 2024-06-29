@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Front\StoreTestRequest;
 use App\Http\Requests\Api\V1\Front\TestRequest;
 use App\Http\Requests\Api\V1\Front\UpdateTestRequest;
-use App\Http\Resources\V1\Admin\QuestionResource;
+use App\Http\Resources\V1\Front\QuestionResource;
 use App\Http\Resources\V1\Front\TestCollection;
 use App\Http\Resources\V1\Front\TestResource;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\Test;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
