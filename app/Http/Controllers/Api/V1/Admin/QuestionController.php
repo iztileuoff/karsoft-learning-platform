@@ -81,9 +81,7 @@ class QuestionController extends Controller
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
-        $validated = $request->validated();
-
-        if (isset($validated['options'])) {
+        if ($request->options) {
             $options = collect($validated['options'])->map(function ($option) {
                 return [
                     'number' => Str::ulid()->toString(),
@@ -96,7 +94,10 @@ class QuestionController extends Controller
             $question->options = $options;
         }
 
-        $question->text = $validated['text'];
+        if ($request->text) {
+            $question->text = $request->text;
+        }
+
         $question->save();
 
         if ($request->hasFile('image')) {
