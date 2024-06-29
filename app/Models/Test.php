@@ -51,10 +51,12 @@ class Test extends Model
                     'id' => $question['id'],
                     'quiz_id' => $question['quiz_id'],
                     'text' => $question['text'],
+                    'image_url' => $question['image_url'],
                     'options' => collect($question['options'])->map(function ($option) {
                         return [
                             'number' => $option['number'],
                             'text' => $option['text'],
+                            'image_url' => $option['image_url'],
                         ];
                     })
                 ];
