@@ -22,7 +22,7 @@ class TestController extends Controller
             $query->whereDate('started_at', '<=', $request->to_date);
         })
             ->with('quiz', 'user')
-            ->select('quiz_id', 'user_id', 'started_at', 'finished_at', 'time_spent', 'questions_count', 'correct_questions_count', 'percent')
+            ->select('quiz_id', 'user_id', 'started_at', 'finished_at', 'time_spent', 'questions_count', 'correct_answers_count', 'percent')
             ->paginate($request->input('per_page', 10));
 
         return new TestCollection($tests);
