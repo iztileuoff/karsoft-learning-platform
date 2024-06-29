@@ -91,7 +91,7 @@ class TestController extends Controller
         $answeredQuestions = [];
 
         foreach ($answers as $answer) {
-            $dataQuestion = $dataQuestions->where('id', $answer['id'])->first();
+            $dataQuestion = $dataQuestions->where('id', $answer['question_id'])->first();
 
             $options = collect($dataQuestion['options']);
 
