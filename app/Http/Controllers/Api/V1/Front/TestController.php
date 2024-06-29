@@ -113,7 +113,7 @@ class TestController extends Controller
         $validated['data_questions'] = $answeredQuestions;
         $validated['time_spent'] = $finished_at->diffInMinutes($started_at);
         $validated['correct_questions_count'] = collect($answeredQuestions)->where('correct_answer', true)->count();
-        $validated['percent'] = (100 * $validated['correct_questions_count']) / $test->questions_count;
+        $validated['percent'] = (100 * $validated['correct_questions_count']) / $dataQuestionsCount;
 
         $test->update($validated);
 
