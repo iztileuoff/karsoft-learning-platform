@@ -97,6 +97,7 @@ class TestController extends Controller
                     'number' => $option['number'],
                     'text' => $option['text'],
                     'correct' => $option['correct'],
+                    'option_url' => $option['option_url'],
                     'is_selected' => $question['option_number'] == $option['number'],
                 ];
             });
