@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamp('started_at')->nullable()->useCurrent();
             $table->timestamp('finished_at')->nullable();
-            $table->unsignedSmallInteger('time_spent')->nullable();
+            $table->string('time_spent')->nullable();
             $table->unsignedSmallInteger('questions_count')->nullable();
             $table->unsignedSmallInteger('correct_questions_count')->nullable();
             $table->decimal('percent', 5, 2)->nullable();

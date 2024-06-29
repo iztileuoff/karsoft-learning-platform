@@ -41,10 +41,11 @@ class TestController extends Controller
 
         $quiz = Quiz::find($validated['quiz_id']);
 
-        $randomQuestions = Question::where('quiz_id', $quiz->id)->inRandomOrder()->limit($quiz->questions_count)->get();
+        $randomQuestions = Question::where('quiz_id', $quiz->id)->inRandomOrder()->limit($quiz->number_of_questions)->get();
+        $randomQuestionsCount = $randomQuestions->count();
         $dataQuestions = QuestionResource::collection($randomQuestions);
 
-        $validated['questions_count'] = $quiz->questions_count;
+        $validated['questions_count'] = $randomQuestionsCount;
         $validated['data_questions'] = $dataQuestions;
 
         $test = Test::firstOrCreate([
@@ -67,8 +68,6 @@ class TestController extends Controller
     public function update(UpdateTestRequest $request, Test $test)
     {
         Gate::authorize('update', $test);
-
-        $quiz = Quiz::find($test->quiz_id);
 
         $validated = $request->validated();
         $questions = collect($validated['questions']);
@@ -112,7 +111,7 @@ class TestController extends Controller
         $finished_at = Carbon::parse($validated['finished_at']);
 
         $validated['data_questions'] = $answeredQuestions;
-        $validated['time_spent'] = $started_at->diffInMinutes($finished_at);
+        $validated['time_spent'] = $started_at->diffInSeconds($finished_at);
         $validated['correct_questions_count'] = collect($answeredQuestions)->where('correct_answer', true)->count();
         $validated['percent'] = (100 * $validated['correct_questions_count']) / $dataQuestionsCount;
 
