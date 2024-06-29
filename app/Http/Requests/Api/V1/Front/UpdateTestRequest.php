@@ -26,8 +26,8 @@ class UpdateTestRequest extends FormRequest
 
                 $questionIds = array_column($this->test->data_questions, 'id');
 
-                if (!in_array($question->id, $questionIds)) {
-                    return $fail("Invalid question ID: {$question->id}");
+                if (!in_array($question['id'], $questionIds)) {
+                    return $fail("Invalid question ID: {$question['id']}");
                 }
 
                 $optionIds = array_column($question['options'], 'number');
