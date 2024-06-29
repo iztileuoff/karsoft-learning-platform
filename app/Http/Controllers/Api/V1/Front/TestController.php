@@ -83,7 +83,6 @@ class TestController extends Controller
             ]);
         }
 
-
         $questionIds = collect($questions)->sortBy('id')->pluck('id');
         $dataQuestionIds = $dataQuestions->sortBy('id')->pluck('id');
 
