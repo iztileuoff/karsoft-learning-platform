@@ -111,7 +111,7 @@ class TestController extends Controller
         $finished_at = Carbon::parse($validated['finished_at']);
 
         $validated['data_questions'] = $answeredQuestions;
-        $validated['time_spent'] = $finished_at->diffInMinutes($started_at);
+        $validated['time_spent'] = $started_at->diffInMinutes($finished_at);
         $validated['correct_questions_count'] = collect($answeredQuestions)->where('correct_answer', true)->count();
         $validated['percent'] = (100 * $validated['correct_questions_count']) / $dataQuestionsCount;
 
