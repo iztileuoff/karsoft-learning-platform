@@ -48,10 +48,10 @@ class Test extends Model
         if ($this->data_questions != null) {
             return collect($this->data_questions)->map(function ($question) {
                 return [
-                    'id' => $question->id,
-                    'quiz_id' => $question->quiz_id,
-                    'text' => $question->text,
-                    'options' => collect($question->options)->map(function ($option) {
+                    'id' => $question['id'],
+                    'quiz_id' => $question['quiz_id'],
+                    'text' => $question['text'],
+                    'options' => collect($question['options'])->map(function ($option) {
                         return [
                             'number' => $option['number'],
                             'text' => $option['text'],
