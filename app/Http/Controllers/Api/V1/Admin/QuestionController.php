@@ -103,7 +103,7 @@ class QuestionController extends Controller
         if ($request->hasFile('image')) {
             $question->clearMediaCollection('image');
 
-            $question->addMediaFromRequest('image')->toMediaCollection('image');
+            $question->addMedia($request->file('image'))->toMediaCollection('image');
         }
 
         return new QuestionResource($question);
