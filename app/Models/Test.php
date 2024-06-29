@@ -45,7 +45,7 @@ class Test extends Model
 
     public function getOnlyNumberAndTextQuestionsOptions(): ?\Illuminate\Support\Collection
     {
-        if (isset($this->data_questions)) {
+        if ($this->data_questions != null) {
             return collect($this->data_questions)->map(function ($question) {
                 return [
                     'id' => $question->id,
