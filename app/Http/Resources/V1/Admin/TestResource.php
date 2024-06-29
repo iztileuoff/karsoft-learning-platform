@@ -20,8 +20,10 @@ class TestResource extends JsonResource
             'finished_at' => $this->finished_at?->format('Y-m-d H:i:s'),
             'time_spent' => $this->time_spent,
             'questions_count' => $this->questions_count,
-            'correct_questions_count' => $this->correct_questions_count,
-            'data_questions' => $this->when(! $request->routeIs('*.index'), $this->data_questions),
+            'correct_answers_count' => $this->correct_answers_count,
+            'percent' => $this->percent,
+            'questions' => $this->when(! $request->routeIs('*.index'), $this->when($this->finished_at === null, $this->getOnlyNumberAndTextQuestionsOptions())),
+            'answers' => $this->when(! $request->routeIs('*.index'), $this->when($this->finished_at !== null, $this->data_questions)),
         ];
     }
 }
