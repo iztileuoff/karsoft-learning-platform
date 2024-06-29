@@ -23,7 +23,7 @@ class UpdateTestRequest extends FormRequest
                 $questionId = $this->input("answers.$questionIndex.question_id");
 
                 $question = collect($this->test->data_questions)->firstWhere('id', $questionId);
-                $optionIds = array_column($question['options'], 'id');
+                $optionIds = array_column($question['options'], 'number');
 
                 if (!in_array($value, $optionIds)) {
                     return $fail("Invalid option NUMBER: {$value}");
