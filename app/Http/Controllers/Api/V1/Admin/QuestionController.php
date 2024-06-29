@@ -82,7 +82,7 @@ class QuestionController extends Controller
     public function update(UpdateQuestionRequest $request, Question $question)
     {
         if ($request->options) {
-            $options = collect($validated['options'])->map(function ($option) {
+            $options = collect($request->options)->map(function ($option) {
                 return [
                     'number' => Str::ulid()->toString(),
                     'text' => $option['text'],
