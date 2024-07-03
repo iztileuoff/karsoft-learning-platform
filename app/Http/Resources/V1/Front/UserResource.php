@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\V1\Front;
 
-use App\Http\Resources\V1\Admin\PostResource;
-use App\Http\Resources\V1\Admin\SchoolResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
