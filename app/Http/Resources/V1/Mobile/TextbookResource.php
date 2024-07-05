@@ -19,6 +19,7 @@ class TextbookResource extends JsonResource
             'degree' => new DegreeResource($this->whenLoaded('degree')),
             'language' => $this->language,
             'file' => new MediaResource($this->getFirstMedia('file')),
+            'image_url' => $this->getFirstMediaUrl('image'),
         ];
     }
 }
