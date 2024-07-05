@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Mobile\LessonController;
 use App\Http\Controllers\Api\V1\Mobile\PostController;
 use App\Http\Controllers\Api\V1\Mobile\ProfileController;
 use App\Http\Controllers\Api\V1\Mobile\QuizController;
+use App\Http\Controllers\Api\V1\Mobile\RatingUserController;
 use App\Http\Controllers\Api\V1\Mobile\SchoolController;
 use App\Http\Controllers\Api\V1\Mobile\TestController;
 use Illuminate\Support\Facades\Route;
