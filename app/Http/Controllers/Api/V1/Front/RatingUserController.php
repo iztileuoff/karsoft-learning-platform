@@ -11,9 +11,10 @@ class RatingUserController extends Controller
 {
     public function index(RatingUserRequest $request): RatingUserCollection
     {
-        $users = User::when($request->post_id, function ($query) use ($request) {
-            $query->where('post_id', $request->post_id);
-        })
+        $users = User::where('is_admin', false)
+            ->when($request->post_id, function ($query) use ($request) {
+                $query->where('post_id', $request->post_id);
+            })
             ->with('post', 'school')
             ->withAvg('tests', 'percent')
             ->paginate($request->input('per_page', 30));
