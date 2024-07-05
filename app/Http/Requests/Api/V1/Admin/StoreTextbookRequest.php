@@ -16,6 +16,7 @@ class StoreTextbookRequest extends FormRequest
             'degree_id' => ['required', Rule::exists('degrees', 'id')],
             'language' => ['required', Rule::enum(LanguagesEnum::class)],
             'file' => ['required', 'file', 'mimes:pdf', 'max:204800'],
+            'image' => ['required', 'image', 'max:2048'],
         ];
     }
 

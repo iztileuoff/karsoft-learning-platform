@@ -16,6 +16,7 @@ class UpdateTextbookRequest extends FormRequest
             'degree_id' => ['required', Rule::exists('degrees', 'id')],
             'language' => ['required', Rule::enum(LanguagesEnum::class)],
             'file' => ['file', 'mimes:pdf', 'max:204800'],
+            'image' => ['image', 'max:2048'],
         ];
     }
 

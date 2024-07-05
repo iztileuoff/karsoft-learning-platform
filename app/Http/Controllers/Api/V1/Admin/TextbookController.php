@@ -32,6 +32,8 @@ class TextbookController extends Controller
 
         $textbook->addMediaFromRequest('file')->toMediaCollection('file');
 
+        $textbook->addMediaFromRequest('image')->toMediaCollection('image');
+
         return new TextbookResource($textbook);
     }
 
@@ -52,6 +54,12 @@ class TextbookController extends Controller
             $textbook->clearMediaCollection('file');
 
             $textbook->addMediaFromRequest('file')->toMediaCollection('file');
+        }
+
+        if ($request->hasFile('image')) {
+            $textbook->clearMediaCollection('image');
+
+            $textbook->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
         return new TextbookResource($textbook);
