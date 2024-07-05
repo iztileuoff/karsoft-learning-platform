@@ -27,7 +27,7 @@ class Test extends Model
             'started_at' => 'datetime',
             'finished_at' => 'datetime',
             'time_spent' => 'integer',
-            'percent' => 'decimal',
+            'percent' => 'decimal:5,2',
             'questions_count' => 'integer',
             'correct_answers_count' => 'integer',
             'data_questions' => 'array',
