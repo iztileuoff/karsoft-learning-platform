@@ -31,6 +31,7 @@ Route::group([
         Route::apiResource('lessons', LessonController::class)->only('index', 'show');
         Route::apiResource('quizzes', QuizController::class)->only('index', 'show');
         Route::apiResource('tests', TestController::class)->except('destroy');
+        Route::apiResource('rating/users', RatingUserController::class)->only('index');
     });
 });
 
