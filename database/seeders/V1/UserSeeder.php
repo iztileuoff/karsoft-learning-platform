@@ -2,8 +2,8 @@
 
 namespace Database\Seeders\V1;
 
+use App\Enums\DistrictsEnum;
 use App\Enums\PostsEnum;
-use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
             'email' => null,
             'password' => 'karsoft-76353',
             'post_id' => PostsEnum::teacher,
+            'district_id' => DistrictsEnum::Nukus,
+            'school_id' => 1,
             'google_id' => null,
             'telegram_id' => null,
         ]);
