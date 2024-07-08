@@ -2,16 +2,10 @@
 
 namespace Database\Seeders\V1;
 
-use App\Enums\DegreesEnum;
-use App\Enums\LanguagesEnum;
 use App\Models\Lesson;
-use App\Models\Textbook;
 use Illuminate\Database\Seeder;
-
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
-
-use function Symfony\Component\Translation\t;
 
 class LessonSeeder extends Seeder
 {
@@ -44,5 +38,33 @@ class LessonSeeder extends Seeder
         ]);
 
         $lesson->copyMedia(storage_path('app/videos/Debawlaw procesi.mp4'))->toMediaCollection('video');
+
+        $lesson = Lesson::create([
+            'name' => "5-sabaq",
+        ]);
+
+        $lesson->copyMedia(storage_path('app/videos/6-klass scratch.mp4'))->toMediaCollection('video');
+
+        $lesson = Lesson::create([
+            'name' => "6-sabaq",
+        ]);
+
+        $lesson->copyMedia(storage_path('app/videos/6-klass Tekst qosiw ozgertiw koshiriw.mp4'))->toMediaCollection(
+            'video'
+        );
+
+        $lesson = Lesson::create([
+            'name' => "7-sabaq",
+        ]);
+
+        $lesson->copyMedia(storage_path('app/videos/7-klass internetten paydalaniw word.mp4'))->toMediaCollection(
+            'video'
+        );
+
+        $lesson = Lesson::create([
+            'name' => "8-sabaq",
+        ]);
+
+        $lesson->copyMedia(storage_path('app/videos/7-klass Excel.mp4'))->toMediaCollection('video');
     }
 }
