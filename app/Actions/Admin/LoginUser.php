@@ -15,7 +15,7 @@ class LoginUser
             ->where('phone', $request->phone)
             ->first();
 
-        if (! $user || ! Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'phone' => [__('auth.failed')],
             ]);
@@ -23,6 +23,6 @@ class LoginUser
 
         $device = substr($request->userAgent() ?? '', 0, 255);
 
-        return [$user, $user->createToken($device)->plainTextToken];
+        return [$user->load('post', 'school'), $user->createToken($device)->plainTextToken];
     }
 }
