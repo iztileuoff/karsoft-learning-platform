@@ -23,6 +23,6 @@ class LoginUser
 
         $device = substr($request->userAgent() ?? '', 0, 255);
 
-        return [$user->load('post', 'school'), $user->createToken($device)->plainTextToken];
+        return [$user->load('post', 'school'), $user->createToken($device, ['admin'])->plainTextToken];
     }
 }

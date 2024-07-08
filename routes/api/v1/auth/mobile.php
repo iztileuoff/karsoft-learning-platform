@@ -11,5 +11,5 @@ Route::group([
 ], function () {
     Route::post('registration', RegistrationController::class)->name('registration');
     Route::post('login', LoginController::class)->name('login');
-    Route::delete('logout', LogoutController::class)->name('logout')->middleware('auth:sanctum');
+    Route::delete('logout', LogoutController::class)->name('logout')->middleware('auth:sanctum', 'ability:mobile');
 });

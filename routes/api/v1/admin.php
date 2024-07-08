@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
-    'middleware' => 'auth:sanctum',
+    'middleware' => ['auth:sanctum', 'ability:admin'],
 ], function () {
     Route::apiSingleton('profile', ProfileController::class);
 

@@ -22,7 +22,7 @@ Route::group([
     Route::get('schools', SchoolController::class)->name('schools');
 
     Route::group([
-        'middleware' => 'auth:sanctum',
+        'middleware' => ['auth:sanctum', 'ability:mobile'],
     ], function () {
         Route::get('info', InfoController::class)->name('info');
         Route::apiSingleton('profile', ProfileController::class);
