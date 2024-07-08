@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 Route::get('/', function () {
-    return response()->json(['message' => 'Not found.'], 404);
+    throw new NotFoundHttpException();
 });
