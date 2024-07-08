@@ -7,12 +7,15 @@ use App\Http\Resources\V1\Front\TextbookCollection;
 use App\Http\Resources\V1\Front\TextbookResource;
 use App\Models\Textbook;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TextbookController extends Controller
 {
     public function index(Request $request): TextbookCollection
     {
-        $textbooks = Textbook::with('media', 'degree')->get();
+        $textbooks = Cache::remember('textbooks', now()->addHour(), function () {
+            return Textbook::with('media', 'degree')->get();
+        });
 
         return new TextbookCollection($textbooks);
     }
