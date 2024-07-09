@@ -135,6 +135,6 @@ class TestController extends Controller
 
         $test->update($validated);
 
-        return new TestResource($test->load('quiz', 'user'));
+        return new TestResource($test);
     }
 }

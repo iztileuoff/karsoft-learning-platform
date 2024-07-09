@@ -28,9 +28,19 @@ class TestController extends Controller
             })->when($request->to_date, function ($query) use ($request) {
                 $query->whereDate('started_at', '<=', $request->to_date);
             })
-                ->with('quiz')
-                ->select('id', 'quiz_id', 'user_id', 'started_at', 'finished_at', 'time_spent', 'questions_count', 'correct_answers_count', 'percent')
-                ->paginate($request->input('per_page', 10));
+            ->with('quiz')
+            ->select(
+                'id',
+                'quiz_id',
+                'user_id',
+                'started_at',
+                'finished_at',
+                'time_spent',
+                'questions_count',
+                'correct_answers_count',
+                'percent'
+            )
+            ->paginate($request->input('per_page', 10));
 
         return new TestCollection($tests);
     }
@@ -41,7 +51,9 @@ class TestController extends Controller
 
         $quiz = Quiz::find($validated['quiz_id']);
 
-        $randomQuestions = Question::where('quiz_id', $quiz->id)->inRandomOrder()->limit($quiz->number_of_questions)->get();
+        $randomQuestions = Question::where('quiz_id', $quiz->id)->inRandomOrder()->limit(
+            $quiz->number_of_questions
+        )->get();
         $randomQuestionsCount = $randomQuestions->count();
         $dataQuestions = QuestionResource::collection($randomQuestions);
 
@@ -123,6 +135,6 @@ class TestController extends Controller
 
         $test->update($validated);
 
-        return new TestResource($test->load('quiz', 'user'));
+        return new TestResource($test);
     }
 }
