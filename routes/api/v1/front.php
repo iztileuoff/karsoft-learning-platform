@@ -9,7 +9,9 @@ use App\Http\Controllers\Api\V1\Front\ProfileController;
 use App\Http\Controllers\Api\V1\Front\QuizController;
 use App\Http\Controllers\Api\V1\Front\RatingUserController;
 use App\Http\Controllers\Api\V1\Front\SchoolController;
+use App\Http\Controllers\Api\V1\Front\TestAnswerController;
 use App\Http\Controllers\Api\V1\Front\TestController;
+use App\Http\Controllers\Api\V1\Front\TestQuestionController;
 use App\Http\Controllers\Api\V1\Front\TextbookController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +30,7 @@ Route::group([
     Route::apiResource('lessons', LessonController::class)->only('index', 'show');
     Route::apiResource('quizzes', QuizController::class)->only('index', 'show');
     Route::apiResource('tests', TestController::class)->except('destroy');
+    Route::apiResource('tests.questions', TestQuestionController::class)->only('index');
+    Route::apiResource('tests.answers', TestAnswerController::class)->only('index');
     Route::apiResource('rating/users', RatingUserController::class)->only('index');
 });
