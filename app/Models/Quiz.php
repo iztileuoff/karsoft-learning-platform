@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Quiz extends Model
 {
@@ -45,5 +46,24 @@ class Quiz extends Model
     public function randomQuestions(): HasMany
     {
         return $this->hasMany(Question::class)->inRandomOrder();
+    }
+
+    public function test(): HasOne
+    {
+        return $this->hasOne(Test::class)
+            ->where('user_id', auth()->id())
+            ->select(
+                [
+                    'id',
+                    'quiz_id',
+                    'user_id',
+                    'started_at',
+                    'finished_at',
+                    'time_spent',
+                    'questions_count',
+                    'correct_answers_count',
+                    'percent'
+                ]
+            );
     }
 }

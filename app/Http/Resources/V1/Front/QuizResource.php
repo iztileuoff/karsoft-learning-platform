@@ -19,6 +19,7 @@ class QuizResource extends JsonResource
             'language' => $this->language,
             'questions_count' => $this->whenCounted('questions'),
             'number_of_questions' => $this->number_of_questions,
+            'test' => new TestResource($this->whenLoaded('test')),
         ];
     }
 }
