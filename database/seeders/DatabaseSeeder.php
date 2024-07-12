@@ -2,19 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\V1\AuthorSeeder;
 use Database\Seeders\V1\DegreeSeeder;
 use Database\Seeders\V1\InfoSeeder;
 use Database\Seeders\V1\LessonSeeder;
 use Database\Seeders\V1\PostSeeder;
+use Database\Seeders\V1\PresentationSeeder;
 use Database\Seeders\V1\QuizSeeder;
 use Database\Seeders\V1\RegionSeeder;
 use Database\Seeders\V1\SchoolSeeder;
 use Database\Seeders\V1\TextbookSeeder;
 use Database\Seeders\V1\UserSeeder;
 use Illuminate\Database\Seeder;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
             TextbookSeeder::class,
             QuizSeeder::class,
             LessonSeeder::class,
+            PresentationSeeder::class,
         ]);
     }
 }

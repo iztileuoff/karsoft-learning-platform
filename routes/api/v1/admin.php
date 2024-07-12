@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Admin\DistrictController;
 use App\Http\Controllers\Api\V1\Admin\InfoController;
 use App\Http\Controllers\Api\V1\Admin\LessonController;
 use App\Http\Controllers\Api\V1\Admin\PostController;
+use App\Http\Controllers\Api\V1\Admin\PresentationController;
 use App\Http\Controllers\Api\V1\Admin\ProfileController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
@@ -36,4 +37,5 @@ Route::group([
     Route::apiResource('lessons', LessonController::class);
     Route::apiResource('tests', TestController::class)->only('index', 'show');
     Route::apiResource('rating/users', RatingUserController::class)->only('index');
+    Route::apiResource('presentations', PresentationController::class);
 });
