@@ -12,7 +12,7 @@ class QuizController extends Controller
 {
     public function index(Request $request)
     {
-        $quizzes = Quiz::with('degree')
+        $quizzes = Quiz::with('degree', 'test')
             ->withCount('questions')
             ->paginate($request->input('per_page', 10));
 
@@ -21,6 +21,6 @@ class QuizController extends Controller
 
     public function show(Quiz $quiz)
     {
-        return new QuizResource($quiz->load('degree'));
+        return new QuizResource($quiz->load('degree', 'test'));
     }
 }
