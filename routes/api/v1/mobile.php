@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\Mobile\PostController;
 use App\Http\Controllers\Api\V1\Mobile\PresentationController;
 use App\Http\Controllers\Api\V1\Mobile\ProfileController;
 use App\Http\Controllers\Api\V1\Mobile\QuizController;
+use App\Http\Controllers\Api\V1\Mobile\RatingTestController;
 use App\Http\Controllers\Api\V1\Mobile\RatingUserController;
 use App\Http\Controllers\Api\V1\Mobile\SchoolController;
 use App\Http\Controllers\Api\V1\Mobile\TestAnswerController;
@@ -39,6 +40,7 @@ Route::group([
         Route::apiResource('tests.answers', TestAnswerController::class)->only('index');
         Route::apiResource('rating/users', RatingUserController::class)->only('index');
         Route::apiResource('presentations', PresentationController::class)->only('index', 'show');
+        Route::apiResource('rating/tests', RatingTestController::class)->only('index');
     });
 });
 

@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api\V1\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Front\StoreTestRequest;
-use App\Http\Requests\Api\V1\Front\TestRequest;
 use App\Http\Requests\Api\V1\Front\UpdateTestRequest;
 use App\Http\Resources\V1\Front\QuestionResource;
-use App\Http\Resources\V1\Front\TestCollection;
 use App\Http\Resources\V1\Front\TestResource;
 use App\Models\Question;
 use App\Models\Quiz;
@@ -18,33 +16,6 @@ use Illuminate\Validation\ValidationException;
 
 class TestController extends Controller
 {
-    public function index(TestRequest $request)
-    {
-        $tests = Test::where('user_id', $request->user()->id)
-            ->when($request->quiz_id, function ($query) use ($request) {
-                $query->where('quiz_id', $request->quiz_id);
-            })->when($request->from_date, function ($query) use ($request) {
-                $query->whereDate('started_at', '>=', $request->from_date);
-            })->when($request->to_date, function ($query) use ($request) {
-                $query->whereDate('started_at', '<=', $request->to_date);
-            })
-            ->with('quiz')
-            ->select(
-                'id',
-                'quiz_id',
-                'user_id',
-                'started_at',
-                'finished_at',
-                'time_spent',
-                'questions_count',
-                'correct_answers_count',
-                'percent'
-            )
-            ->paginate($request->input('per_page', 10));
-
-        return new TestCollection($tests);
-    }
-
     public function store(StoreTestRequest $request)
     {
         $validated = $request->validated();

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Front\PostController;
 use App\Http\Controllers\Api\V1\Front\PresentationController;
 use App\Http\Controllers\Api\V1\Front\ProfileController;
 use App\Http\Controllers\Api\V1\Front\QuizController;
+use App\Http\Controllers\Api\V1\Front\RatingTestController;
 use App\Http\Controllers\Api\V1\Front\RatingUserController;
 use App\Http\Controllers\Api\V1\Front\SchoolController;
 use App\Http\Controllers\Api\V1\Front\TestAnswerController;
@@ -35,4 +36,5 @@ Route::group([
     Route::apiResource('tests.answers', TestAnswerController::class)->only('index');
     Route::apiResource('rating/users', RatingUserController::class)->only('index');
     Route::apiResource('presentations', PresentationController::class)->only('index', 'show');
+    Route::apiResource('rating/tests', RatingTestController::class)->only('index');
 });

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1\Front;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TestRequest extends FormRequest
+class IndexRatingTestRequest extends FormRequest
 {
     public function rules(): array
     {
