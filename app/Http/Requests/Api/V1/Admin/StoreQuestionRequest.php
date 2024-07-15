@@ -34,7 +34,7 @@ class StoreQuestionRequest extends FormRequest
 
             // Check if only one option is marked as correct
             $correctCount = collect($options)->filter(function ($option) {
-                return $option['correct'] === true;
+                return $option['correct'] == true;
             })->count();
 
             if ($correctCount !== 1) {
