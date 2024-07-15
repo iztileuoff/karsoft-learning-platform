@@ -27,7 +27,7 @@ class TextbookSeeder extends Seeder
         $textbook->copyMedia(storage_path('app/textbooks/kaa/ICT_STB_G5_QQ.pdf'))->toMediaCollection(
             'file'
         );
-        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-05_16-59-37.png'))->toMediaCollection(
+        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-15_12-02-42.png'))->toMediaCollection(
             'image'
         );
 
@@ -55,7 +55,7 @@ class TextbookSeeder extends Seeder
         $textbook->copyMedia(storage_path('app/textbooks/kaa/ICT_STB_G6_QQ.pdf'))->toMediaCollection(
             'file'
         );
-        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-05_17-00-44.png'))->toMediaCollection(
+        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-15_12-03-05.png'))->toMediaCollection(
             'image'
         );
 
@@ -83,7 +83,7 @@ class TextbookSeeder extends Seeder
         $textbook->copyMedia(storage_path('app/textbooks/kaa/ICT_STB_G7_QQ.pdf'))->toMediaCollection(
             'file'
         );
-        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-05_17-01-27.png'))->toMediaCollection(
+        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-15_12-03-27.png'))->toMediaCollection(
             'image'
         );
 
@@ -111,7 +111,7 @@ class TextbookSeeder extends Seeder
         $textbook->copyMedia(storage_path('app/textbooks/kaa/ICT_STB_G8_QQ.pdf'))->toMediaCollection(
             'file'
         );
-        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-05_17-02-10.png'))->toMediaCollection(
+        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-15_12-03-42.png'))->toMediaCollection(
             'image'
         );
 
@@ -139,7 +139,7 @@ class TextbookSeeder extends Seeder
         $textbook->copyMedia(storage_path('app/textbooks/kaa/ICT_STB_G9_QQ.pdf'))->toMediaCollection(
             'file'
         );
-        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-05_17-02-49.png'))->toMediaCollection(
+        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-15_12-03-58.png'))->toMediaCollection(
             'image'
         );
 
@@ -167,7 +167,7 @@ class TextbookSeeder extends Seeder
         $textbook->copyMedia(storage_path('app/textbooks/kaa/ICT_STB_G10-11_QQ.pdf'))->toMediaCollection(
             'file'
         );
-        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-05_17-03-54.png'))->toMediaCollection(
+        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-15_12-04-13.png'))->toMediaCollection(
             'image'
         );
 
@@ -195,7 +195,7 @@ class TextbookSeeder extends Seeder
         $textbook->copyMedia(storage_path('app/textbooks/kaa/ICT_STB_G10-11_QQ.pdf'))->toMediaCollection(
             'file'
         );
-        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-05_17-03-54.png'))->toMediaCollection(
+        $textbook->copyMedia(storage_path('app/textbooks/images/image_2024-07-15_12-04-13.png'))->toMediaCollection(
             'image'
         );
 
