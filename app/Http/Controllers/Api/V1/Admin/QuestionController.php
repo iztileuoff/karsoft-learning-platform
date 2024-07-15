@@ -49,7 +49,7 @@ class QuestionController extends Controller
             return [
                 'number' => Str::ulid()->toString(),
                 'text' => $option['text'],
-                'correct' => $option['correct'],
+                'correct' => $option['correct'] == 1,
             ];
         })->toArray();
 
@@ -86,7 +86,7 @@ class QuestionController extends Controller
                 return [
                     'number' => Str::ulid()->toString(),
                     'text' => $option['text'],
-                    'correct' => $option['correct'],
+                    'correct' => $option['correct'] == 1,
                     'image_url' => $option['image_url'] ?? "",
                 ];
             })->toArray();
