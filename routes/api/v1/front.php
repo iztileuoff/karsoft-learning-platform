@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Front\DistrictController;
 use App\Http\Controllers\Api\V1\Front\InfoController;
 use App\Http\Controllers\Api\V1\Front\LessonController;
 use App\Http\Controllers\Api\V1\Front\PostController;
+use App\Http\Controllers\Api\V1\Front\PresentationController;
 use App\Http\Controllers\Api\V1\Front\ProfileController;
 use App\Http\Controllers\Api\V1\Front\QuizController;
 use App\Http\Controllers\Api\V1\Front\RatingUserController;
@@ -33,4 +34,5 @@ Route::group([
     Route::apiResource('tests.questions', TestQuestionController::class)->only('index');
     Route::apiResource('tests.answers', TestAnswerController::class)->only('index');
     Route::apiResource('rating/users', RatingUserController::class)->only('index');
+    Route::apiResource('presentations', PresentationController::class)->only('index', 'show');
 });

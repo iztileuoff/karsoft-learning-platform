@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Mobile\DistrictController;
 use App\Http\Controllers\Api\V1\Mobile\InfoController;
 use App\Http\Controllers\Api\V1\Mobile\LessonController;
 use App\Http\Controllers\Api\V1\Mobile\PostController;
+use App\Http\Controllers\Api\V1\Mobile\PresentationController;
 use App\Http\Controllers\Api\V1\Mobile\ProfileController;
 use App\Http\Controllers\Api\V1\Mobile\QuizController;
 use App\Http\Controllers\Api\V1\Mobile\RatingUserController;
@@ -37,6 +38,7 @@ Route::group([
         Route::apiResource('tests.questions', TestQuestionController::class)->only('index');
         Route::apiResource('tests.answers', TestAnswerController::class)->only('index');
         Route::apiResource('rating/users', RatingUserController::class)->only('index');
+        Route::apiResource('presentations', PresentationController::class)->only('index', 'show');
     });
 });
 
