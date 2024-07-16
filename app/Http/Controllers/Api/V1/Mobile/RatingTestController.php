@@ -19,6 +19,7 @@ class RatingTestController extends Controller
             $query->whereDate('started_at', '<=', $request->to_date);
         })
             ->select([
+                'id',
                 'quiz_id',
                 'user_id',
                 'started_at',
