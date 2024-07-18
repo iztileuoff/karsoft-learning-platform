@@ -22,6 +22,9 @@ class LoginUser
 
         $device = substr($request->userAgent() ?? '', 0, 255);
 
-        return [$user->load('post', 'school'), $user->createToken($device, ['front'])->plainTextToken];
+        return [
+            $user->load('post', 'school')->loadAvg('tests', 'percent'),
+            $user->createToken($device, ['front'])->plainTextToken
+        ];
     }
 }

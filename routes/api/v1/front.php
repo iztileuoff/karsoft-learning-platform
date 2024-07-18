@@ -34,7 +34,7 @@ Route::group([
     Route::apiResource('tests', TestController::class)->except('destroy');
     Route::apiResource('tests.questions', TestQuestionController::class)->only('index');
     Route::apiResource('tests.answers', TestAnswerController::class)->only('index');
-    Route::apiResource('rating/users', RatingUserController::class)->only('index');
     Route::apiResource('presentations', PresentationController::class)->only('index', 'show');
+    Route::apiResource('rating/users', RatingUserController::class)->only('index');
     Route::apiResource('rating/tests', RatingTestController::class)->only('index');
 });

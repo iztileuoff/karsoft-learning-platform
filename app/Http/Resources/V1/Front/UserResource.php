@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'post' => new PostResource($this->whenLoaded('post')),
             'school_id' => $this->school_id,
             'school' => new SchoolResource($this->whenLoaded('school')),
+            'tests_avg_percent' => $this->tests_avg_percent ?? 0,
         ];
     }
 }
