@@ -15,6 +15,7 @@ class PostController extends Controller
         $posts = Cache::remember('posts_' . $request->getLocale(), now()->addHour(), function () {
             return Post::get();
         });
+
         return new PostCollection($posts);
     }
 }
