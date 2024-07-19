@@ -12,7 +12,7 @@ class DistrictController extends Controller
 {
     public function __invoke(Request $request): DistrictCollection
     {
-        $districts = Cache::remember('districts_' . $request->getLocale(), now()->addHour(), function () {
+        $districts = Cache::remember('districts_' . app()->getLocale(), now()->addHour(), function () {
             return District::get();
         });
 

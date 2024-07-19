@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function __invoke(Request $request): PostCollection
     {
-        $posts = Cache::remember('posts_' . $request->getLocale(), now()->addHour(), function () {
+        $posts = Cache::remember('posts_' . app()->getLocale(), now()->addHour(), function () {
             return Post::get();
         });
 

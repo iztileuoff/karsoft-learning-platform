@@ -12,8 +12,10 @@ class SchoolController extends Controller
 {
     public function __invoke(SchoolRequest $request): SchoolCollection
     {
+        $locale = app()->getLocale();
+
         $schools = Cache::remember(
-            "schools_{$request->district_id}_{$request->getLocale()}",
+            "schools_{$request->district_id}_{$locale}",
             now()->addHour(),
             function () use ($request) {
                 return School::where('district_id', $request->district_id)->get();

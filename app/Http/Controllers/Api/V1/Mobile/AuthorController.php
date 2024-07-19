@@ -13,7 +13,7 @@ class AuthorController extends Controller
 {
     public function index(Request $request): AuthorCollection
     {
-        $authors = Cache::remember('authors_' . $request->getLocale(), now()->addHour(), function () {
+        $authors = Cache::remember('authors_' . app()->getLocale(), now()->addHour(), function () {
             return Author::get();
         });
 

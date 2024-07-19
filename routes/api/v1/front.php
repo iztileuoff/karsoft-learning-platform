@@ -22,7 +22,7 @@ Route::get('districts', DistrictController::class)->name('districts');
 Route::get('schools', SchoolController::class)->name('schools');
 
 Route::group([
-    'middleware' => ['auth:sanctum', 'ability:front'],
+    'middleware' => ['auth:sanctum'],
 ], function () {
     Route::get('info', InfoController::class)->name('info');
     Route::apiSingleton('profile', ProfileController::class);
