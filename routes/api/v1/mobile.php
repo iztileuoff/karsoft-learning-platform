@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Front\TextbookController;
+use App\Http\Controllers\Api\V1\Mobile\AnswerController;
 use App\Http\Controllers\Api\V1\Mobile\AuthorController;
 use App\Http\Controllers\Api\V1\Mobile\DistrictController;
 use App\Http\Controllers\Api\V1\Mobile\InfoController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Api\V1\Mobile\LessonController;
 use App\Http\Controllers\Api\V1\Mobile\PostController;
 use App\Http\Controllers\Api\V1\Mobile\PresentationController;
 use App\Http\Controllers\Api\V1\Mobile\ProfileController;
+use App\Http\Controllers\Api\V1\Mobile\QuestionController;
 use App\Http\Controllers\Api\V1\Mobile\QuizController;
 use App\Http\Controllers\Api\V1\Mobile\RatingTestController;
 use App\Http\Controllers\Api\V1\Mobile\RatingUserController;
@@ -35,6 +37,8 @@ Route::group([
         Route::apiResource('textbooks', TextbookController::class)->only('index', 'show');
         Route::apiResource('lessons', LessonController::class)->only('index', 'show');
         Route::apiResource('quizzes', QuizController::class)->only('index', 'show');
+        Route::apiResource('questions', QuestionController::class)->only('index');
+        Route::apiResource('answers', AnswerController::class)->only('index');
         Route::apiResource('tests', TestController::class)->except('destroy');
         Route::apiResource('tests.questions', TestQuestionController::class)->only('index');
         Route::apiResource('tests.answers', TestAnswerController::class)->only('index');
