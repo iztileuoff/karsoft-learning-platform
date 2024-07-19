@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Events\AuthorChanged;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\StoreAuthorRequest;
 use App\Http\Requests\Api\V1\Admin\UpdateAuthorRequest;
@@ -21,7 +22,11 @@ class AuthorController extends Controller
 
     public function store(StoreAuthorRequest $request)
     {
-        return new AuthorResource(Author::create($request->validated()));
+        $author = Author::create($request->validated());
+
+        AuthorChanged::dispatch();
+
+        return new AuthorResource($author);
     }
 
     public function show(Author $author)
@@ -33,12 +38,16 @@ class AuthorController extends Controller
     {
         $author->update($request->validated());
 
+        AuthorChanged::dispatch();
+
         return new AuthorResource($author);
     }
 
     public function destroy(Author $author)
     {
         $author->delete();
+
+        AuthorChanged::dispatch();
 
         return response()->ok();
     }

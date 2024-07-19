@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\AuthorChanged;
+use App\Listeners\InvalidateAuthorCache;
 use App\Models\Test;
 use App\Policies\TestPolicy;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
@@ -27,7 +30,6 @@ class AppServiceProvider extends ServiceProvider
                 'message' => $message != null ? $message : __('http-statuses.200'),
             ]);
         });
-
     }
 
     /**
@@ -36,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Test::class, TestPolicy::class);
+
+        Event::listen(AuthorChanged::class, InvalidateAuthorCache::class);
     }
 }
