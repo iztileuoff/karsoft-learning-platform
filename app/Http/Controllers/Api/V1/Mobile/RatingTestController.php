@@ -37,7 +37,7 @@ class RatingTestController extends Controller
                 'user.school.district:id,name',
             )
             ->orderBy('percent', 'desc')
-            ->paginate($request->input('per_page', 10));
+            ->cursorPaginate(30);
 
         return new TestCollection($tests);
     }

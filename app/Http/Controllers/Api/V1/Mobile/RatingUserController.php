@@ -18,7 +18,7 @@ class RatingUserController extends Controller
             ->with('post', 'school')
             ->withAvg('tests', 'percent')
             ->orderBy('tests_avg_percent', 'desc')
-            ->paginate($request->input('per_page', 30));
+            ->cursorPaginate(30);
 
         return new RatingUserCollection($users);
     }

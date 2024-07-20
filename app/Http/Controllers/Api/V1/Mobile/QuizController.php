@@ -14,7 +14,7 @@ class QuizController extends Controller
     {
         $quizzes = Quiz::with('degree', 'test')
             ->withCount('questions')
-            ->paginate($request->input('per_page', 10));
+            ->get();
 
         return new QuizCollection($quizzes);
     }

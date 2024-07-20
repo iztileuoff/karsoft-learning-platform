@@ -11,7 +11,6 @@ class RatingUserRequest extends FormRequest
     {
         return [
             'post_id' => ['required', Rule::exists('posts', 'id')],
-            'per_page' => ['required', 'integer', 'min:10', 'max:100'],
         ];
     }
 

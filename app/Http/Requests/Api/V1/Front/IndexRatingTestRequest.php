@@ -12,7 +12,6 @@ class IndexRatingTestRequest extends FormRequest
             'quiz_id' => ['nullable', 'string'],
             'from_date' => ['nullable', 'date_format:Y-m-d'],
             'to_date' => ['nullable', 'date_format:Y-m-d', 'after_or_equal:from_date'],
-            'per_page' => ['required', 'integer', 'min:10', 'max:100']
         ];
     }
 
