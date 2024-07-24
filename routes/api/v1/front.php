@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\V1\Front\TestAnswerController;
 use App\Http\Controllers\Api\V1\Front\TestController;
 use App\Http\Controllers\Api\V1\Front\TestQuestionController;
 use App\Http\Controllers\Api\V1\Front\TextbookController;
+use App\Http\Middleware\Api\V1\AlwaysAcceptJsonMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::get('posts', PostController::class)->name('posts');
@@ -22,7 +23,7 @@ Route::get('districts', DistrictController::class)->name('districts');
 Route::get('schools', SchoolController::class)->name('schools');
 
 Route::group([
-    'middleware' => ['auth:sanctum', 'ability:front'],
+    'middleware' => [AlwaysAcceptJsonMiddleware::class, 'auth:sanctum', 'ability:front'],
 ], function () {
     Route::get('info', InfoController::class)->name('info');
     Route::apiSingleton('profile', ProfileController::class);
