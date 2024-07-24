@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(\App\Http\Middleware\Api\V1\SetLanguageMiddleware::class);
+        $middleware->append(\App\Http\Middleware\Api\V1\AlwaysAcceptJsonMiddleware::class);
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
