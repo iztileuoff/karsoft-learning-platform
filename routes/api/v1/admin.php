@@ -15,13 +15,12 @@ use App\Http\Controllers\Api\V1\Admin\SchoolController;
 use App\Http\Controllers\Api\V1\Admin\TestController;
 use App\Http\Controllers\Api\V1\Admin\TextbookController;
 use App\Http\Controllers\Api\V1\Admin\UserController;
-use App\Http\Middleware\Api\V1\AlwaysAcceptJsonMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'admin',
     'as' => 'admin.',
-    'middleware' => [AlwaysAcceptJsonMiddleware::class, 'auth:sanctum', 'ability:admin'],
+    'middleware' => ['auth:sanctum', 'ability:admin'],
 ], function () {
     Route::apiSingleton('profile', ProfileController::class);
 

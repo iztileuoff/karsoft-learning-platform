@@ -17,7 +17,6 @@ use App\Http\Controllers\Api\V1\Mobile\SchoolController;
 use App\Http\Controllers\Api\V1\Mobile\TestAnswerController;
 use App\Http\Controllers\Api\V1\Mobile\TestController;
 use App\Http\Controllers\Api\V1\Mobile\TestQuestionController;
-use App\Http\Middleware\Api\V1\AlwaysAcceptJsonMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -29,7 +28,7 @@ Route::group([
     Route::get('schools', SchoolController::class)->name('schools');
 
     Route::group([
-        'middleware' => [AlwaysAcceptJsonMiddleware::class, 'auth:sanctum', 'ability:mobile'],
+        'middleware' => ['auth:sanctum', 'ability:mobile'],
     ], function () {
         Route::get('info', InfoController::class)->name('info');
         Route::apiSingleton('profile', ProfileController::class);
