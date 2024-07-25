@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\AuthorChanged;
+use App\Events\LessonChanged;
 use Illuminate\Support\Facades\Cache;
 
 class InvalidateLessonCache
@@ -18,7 +18,7 @@ class InvalidateLessonCache
     /**
      * Handle the event.
      */
-    public function handle(AuthorChanged $event): void
+    public function handle(LessonChanged $event): void
     {
         Cache::forget('lessons');
     }

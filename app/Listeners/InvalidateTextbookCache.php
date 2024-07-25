@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\AuthorChanged;
+use App\Events\TextbookChanged;
 use Illuminate\Support\Facades\Cache;
 
 class InvalidateTextbookCache
@@ -18,7 +18,7 @@ class InvalidateTextbookCache
     /**
      * Handle the event.
      */
-    public function handle(AuthorChanged $event): void
+    public function handle(TextbookChanged $event): void
     {
         Cache::forget('textbooks');
     }
