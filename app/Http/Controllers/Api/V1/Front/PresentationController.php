@@ -12,7 +12,11 @@ class PresentationController extends Controller
 {
     public function index(Request $request): PresentationCollection
     {
-        $presentations = Presentation::with('degree', 'media')->paginate($request->input('per_page', 10));
+        $presentations = Presentation::when($request->degree_id, function ($query) use ($request) {
+            $query->where('degree_id', $request->degree_id);
+        })
+            ->with('degree', 'media')
+            ->get();
 
         return new PresentationCollection($presentations);
     }
