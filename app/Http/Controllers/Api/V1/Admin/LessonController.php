@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Events\LessonChanged;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\StoreLessonRequest;
 use App\Http\Requests\Api\V1\Admin\UpdateLessonRequest;
@@ -31,6 +32,8 @@ class LessonController extends Controller
 
         $lesson->addMediaFromRequest('video')->toMediaCollection('video');
 
+        LessonChanged::dispatch();
+
         return new LessonResource($lesson);
     }
 
@@ -53,12 +56,16 @@ class LessonController extends Controller
             $lesson->addMediaFromRequest('video')->toMediaCollection('video');
         }
 
+        LessonChanged::dispatch();
+
         return new LessonResource($lesson);
     }
 
     public function destroy(Lesson $lesson)
     {
         $lesson->delete();
+
+        LessonChanged::dispatch();
 
         return response()->ok();
     }

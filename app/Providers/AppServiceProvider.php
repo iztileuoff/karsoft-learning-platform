@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use App\Events\AuthorChanged;
+use App\Events\LessonChanged;
+use App\Events\TextbookChanged;
 use App\Listeners\InvalidateAuthorCache;
+use App\Listeners\InvalidateLessonCache;
+use App\Listeners\InvalidateTextbookCache;
 use App\Models\Test;
 use App\Policies\TestPolicy;
 use Illuminate\Support\Facades\Event;
@@ -40,5 +44,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Test::class, TestPolicy::class);
 
         Event::listen(AuthorChanged::class, InvalidateAuthorCache::class);
+        Event::listen(TextbookChanged::class, InvalidateTextbookCache::class);
+        Event::listen(LessonChanged::class, InvalidateLessonCache::class);
     }
 }

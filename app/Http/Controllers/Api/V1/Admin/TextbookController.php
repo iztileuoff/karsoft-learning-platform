@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Events\TextbookChanged;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\StoreTextbookRequest;
 use App\Http\Requests\Api\V1\Admin\UpdateTextbookRequest;
@@ -34,6 +35,8 @@ class TextbookController extends Controller
 
         $textbook->addMediaFromRequest('image')->toMediaCollection('image');
 
+        TextbookChanged::dispatch();
+
         return new TextbookResource($textbook);
     }
 
@@ -62,12 +65,16 @@ class TextbookController extends Controller
             $textbook->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
+        TextbookChanged::dispatch();
+
         return new TextbookResource($textbook);
     }
 
     public function destroy(Textbook $textbook): JsonResponse
     {
         $textbook->delete();
+
+        TextbookChanged::dispatch();
 
         return response()->ok();
     }
