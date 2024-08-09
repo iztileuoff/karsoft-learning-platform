@@ -10,6 +10,7 @@ use App\Http\Resources\V1\Admin\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -39,6 +40,12 @@ class UserController extends Controller
 
     public function destroy(User $user): JsonResponse
     {
+        if ($user->id == 34) {
+            throw ValidationException::withMessages([
+                'message' => "You can't delete google user.",
+            ]);
+        }
+
         $user->delete();
 
         return response()->ok();
