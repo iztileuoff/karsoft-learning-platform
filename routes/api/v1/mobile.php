@@ -24,6 +24,7 @@ Route::group([
     'as' => 'mobile.',
 ], function () {
     Route::get('posts', PostController::class)->name('posts');
+    Route::get('regions', RegionController::class)->name('regions');
     Route::get('districts', DistrictController::class)->name('districts');
     Route::get('schools', SchoolController::class)->name('schools');
 

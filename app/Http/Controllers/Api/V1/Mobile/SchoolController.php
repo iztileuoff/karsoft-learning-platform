@@ -14,13 +14,23 @@ class SchoolController extends Controller
     {
         $locale = app()->getLocale();
 
-        $schools = Cache::remember(
-            "schools_{$request->district_id}_{$locale}",
-            now()->addHour(),
-            function () use ($request) {
-                return School::where('district_id', $request->district_id)->get();
-            }
-        );
+        if ($request->district_id <= 17) {
+            $schools = Cache::remember(
+                "schools_{$request->district_id}_{$locale}",
+                now()->addHour(),
+                function () use ($request) {
+                    return School::where('district_id', $request->district_id)->get();
+                }
+            );
+        } else {
+            $schools = Cache::remember(
+                "schools_{$locale}",
+                now()->addHour(),
+                function () use ($request) {
+                    return School::where('district_id', null)->get();
+                }
+            );
+        }
 
         return new SchoolCollection($schools);
     }

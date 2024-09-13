@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Api\V1\Admin;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,12 +18,9 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique('users', 'phone')
             ],
             'password' => ['string', 'min:8', 'max:64'],
-            'district_id' => ['required_with:school_id', Rule::exists('districts', 'id')],
-            'school_id' => [
-                Rule::exists('schools', 'id')->where(function (Builder $query) {
-                    $query->where('district_id', $this->district_id);
-                })
-            ],
+            'region_id' => ['required_with:district_id', Rule::exists('regions', 'id')],
+            'district_id' => [Rule::exists('districts', 'id')],
+            'school_id' => [Rule::exists('schools', 'id')],
             'post_id' => [Rule::exists('posts', 'id')],
             'is_admin' => ['nullable'],
         ];
@@ -40,10 +36,5 @@ class UpdateUserRequest extends FormRequest
         $this->merge([
             'is_admin' => false,
         ]);
-    }
-
-    public function authorize(): bool
-    {
-        return true;
     }
 }

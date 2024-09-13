@@ -20,13 +20,14 @@ class RegistrationRequest extends FormRequest
                 Rule::unique('users', 'phone')
             ],
             'password' => ['required', 'string', 'min:8', 'max:64'],
-            'district_id' => ['required', Rule::exists('districts', 'id')],
-            'school_id' => [
+            'region_id' => ['required', Rule::exists('regions', 'id')],
+            'district_id' => [
                 'required',
-                Rule::exists('schools', 'id')->where(function (Builder $query) {
-                    $query->where('district_id', $this->district_id);
+                Rule::exists('districts', 'id')->where(function (Builder $query) {
+                    $query->where('region_id', $this->region_id);
                 })
             ],
+            'school_id' => ['required', Rule::exists('schools', 'id')],
             'post_id' => ['required', Rule::exists('posts', 'id')],
             'is_admin' => ['nullable'],
         ];

@@ -18,6 +18,8 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'post_id' => $this->post_id,
             'post' => new PostResource($this->whenLoaded('post')),
+            'region_id' => $this->region_id,
+            'region' => new RegionResource($this->whenLoaded('region')),
             'district_id' => $this->district_id,
             'district' => new DistrictResource($this->whenLoaded('district')),
             'school_id' => $this->school_id,

@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index(Request $request): UserCollection
     {
         $users = User::where('is_admin', false)
-            ->with('post', 'school', 'district.region')
+            ->with('post', 'school', 'district', 'region')
             ->paginate($request->input('per_page', 10));
 
         return new UserCollection($users);
@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function show(User $user): UserResource
     {
-        return new UserResource($user->load('post', 'school', 'district.region'));
+        return new UserResource($user->load('post', 'school', 'district', 'region'));
     }
 
     public function update(UpdateUserRequest $request, User $user): UserResource

@@ -20,12 +20,14 @@ class UpdateProfileRequest extends FormRequest
             ],
             'password' => ['string', 'min:8', 'max:64'],
             'post_id' => [Rule::exists('posts', 'id')],
-            'district_id' => ['required_with:school_id', Rule::exists('districts', 'id')],
-            'school_id' => [
-                Rule::exists('schools', 'id')->where(function (Builder $query) {
-                    $query->where('district_id', $this->district_id);
+            'region_id' => ['required_with:district_id', Rule::exists('regions', 'id')],
+            'district_id' => [
+                'required_with:school_id',
+                Rule::exists('districts', 'id')->where(function (Builder $query) {
+                    $query->where('region_id', $this->region_id);
                 })
             ],
+            'school_id' => [Rule::exists('schools', 'id')],
         ];
     }
 

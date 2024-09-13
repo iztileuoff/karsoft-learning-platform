@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api\V1\Mobile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Mobile\DistrictRequest;
 use App\Http\Resources\V1\Mobile\DistrictCollection;
 use App\Models\District;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class DistrictController extends Controller
 {
-    public function __invoke(Request $request): DistrictCollection
+    public function __invoke(DistrictRequest $request): DistrictCollection
     {
-        $districts = Cache::remember('districts_' . app()->getLocale(), now()->addHour(), function () {
-            return District::get();
-        });
+        $districts = District::when($request->region_id, function ($query) use ($request) {
+            return $query->where('region_id', $request->region_id);
+        })
+            ->get();
 
         return new DistrictCollection($districts);
     }

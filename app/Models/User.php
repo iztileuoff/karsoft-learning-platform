@@ -28,6 +28,7 @@ class User extends Authenticatable
         'email',
         'password',
         'post_id',
+        'region_id',
         'district_id',
         'school_id',
         'google_id',
@@ -60,6 +61,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'post_id' => 'int',
+            'region_id' => 'int',
             'district_id' => 'int',
             'school_id' => 'int',
             'google_id' => 'int',
@@ -88,6 +90,11 @@ class User extends Authenticatable
     public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
     }
 
     public function district(): BelongsTo

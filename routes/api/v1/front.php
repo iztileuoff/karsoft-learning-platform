@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\Front\ProfileController;
 use App\Http\Controllers\Api\V1\Front\QuizController;
 use App\Http\Controllers\Api\V1\Front\RatingTestController;
 use App\Http\Controllers\Api\V1\Front\RatingUserController;
+use App\Http\Controllers\Api\V1\Front\RegionController;
 use App\Http\Controllers\Api\V1\Front\SchoolController;
 use App\Http\Controllers\Api\V1\Front\TestAnswerController;
 use App\Http\Controllers\Api\V1\Front\TestController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Api\V1\Front\TextbookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('posts', PostController::class)->name('posts');
+Route::get('regions', RegionController::class)->name('regions');
 Route::get('districts', DistrictController::class)->name('districts');
 Route::get('schools', SchoolController::class)->name('schools');
 
