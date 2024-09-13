@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\V1\Mobile\QuestionController;
 use App\Http\Controllers\Api\V1\Mobile\QuizController;
 use App\Http\Controllers\Api\V1\Mobile\RatingTestController;
 use App\Http\Controllers\Api\V1\Mobile\RatingUserController;
+use App\Http\Controllers\Api\V1\Mobile\RegionController;
 use App\Http\Controllers\Api\V1\Mobile\SchoolController;
 use App\Http\Controllers\Api\V1\Mobile\TestAnswerController;
 use App\Http\Controllers\Api\V1\Mobile\TestController;
