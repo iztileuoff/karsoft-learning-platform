@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\Admin\ProfileController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
 use App\Http\Controllers\Api\V1\Admin\RatingUserController;
+use App\Http\Controllers\Api\V1\Admin\RegionController;
 use App\Http\Controllers\Api\V1\Admin\ReplyController;
 use App\Http\Controllers\Api\V1\Admin\ReviewController;
 use App\Http\Controllers\Api\V1\Admin\SchoolController;
@@ -27,6 +28,7 @@ Route::group([
     Route::apiSingleton('profile', ProfileController::class);
 
     Route::apiResource('schools', SchoolController::class);
+    Route::apiResource('regions', RegionController::class);
     Route::apiResource('districts', DistrictController::class);
     Route::apiResource('users', UserController::class);
     Route::apiResource('posts', PostController::class)->only('index');
