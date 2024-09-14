@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\Front\QuizController;
 use App\Http\Controllers\Api\V1\Front\RatingTestController;
 use App\Http\Controllers\Api\V1\Front\RatingUserController;
 use App\Http\Controllers\Api\V1\Front\RegionController;
+use App\Http\Controllers\Api\V1\Front\ReviewController;
 use App\Http\Controllers\Api\V1\Front\SchoolController;
 use App\Http\Controllers\Api\V1\Front\TestAnswerController;
 use App\Http\Controllers\Api\V1\Front\TestController;
@@ -39,4 +40,5 @@ Route::group([
     Route::apiResource('presentations', PresentationController::class)->only('index', 'show');
     Route::apiResource('rating/users', RatingUserController::class)->only('index');
     Route::apiResource('rating/tests', RatingTestController::class)->only('index');
+    Route::apiResource('reviews', ReviewController::class);
 });

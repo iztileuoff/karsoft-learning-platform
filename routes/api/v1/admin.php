@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\V1\Admin\ProfileController;
 use App\Http\Controllers\Api\V1\Admin\QuestionController;
 use App\Http\Controllers\Api\V1\Admin\QuizController;
 use App\Http\Controllers\Api\V1\Admin\RatingUserController;
+use App\Http\Controllers\Api\V1\Admin\ReplyController;
+use App\Http\Controllers\Api\V1\Admin\ReviewController;
 use App\Http\Controllers\Api\V1\Admin\SchoolController;
 use App\Http\Controllers\Api\V1\Admin\TestController;
 use App\Http\Controllers\Api\V1\Admin\TextbookController;
@@ -38,4 +40,6 @@ Route::group([
     Route::apiResource('tests', TestController::class)->only('index', 'show');
     Route::apiResource('rating/users', RatingUserController::class)->only('index');
     Route::apiResource('presentations', PresentationController::class);
+    Route::apiResource('reviews', ReviewController::class)->except('store');
+    Route::apiResource('replies', ReplyController::class)->except('index', 'show');
 });
