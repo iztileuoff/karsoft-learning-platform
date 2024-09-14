@@ -11,7 +11,10 @@ class ProfileController extends Controller
 {
     public function show(Request $request): UserResource
     {
-        return new UserResource($request->user()->load('post', 'school'));
+        return new UserResource(
+            $request->user()
+                ->load('post', 'school', 'district', 'region')
+        );
     }
 
     public function update(UpdateProfileRequest $request): UserResource

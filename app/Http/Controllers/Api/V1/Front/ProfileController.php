@@ -13,7 +13,7 @@ class ProfileController extends Controller
     {
         return new UserResource(
             $request->user()
-                ->load('post', 'school')
+                ->load('post', 'school', 'district', 'region')
                 ->loadAvg('tests', 'percent')
         );
     }

@@ -13,6 +13,6 @@ class RegistrationUser
 
         $device = substr($request->userAgent() ?? '', 0, 255);
 
-        return [$user->load('post', 'school'), $user->createToken($device, ['mobile'])->plainTextToken];
+        return [$user->load('post', 'school', 'district', 'region'), $user->createToken($device, ['mobile'])->plainTextToken];
     }
 }
