@@ -34,7 +34,7 @@ Route::group([
         'middleware' => ['auth:sanctum', 'ability:mobile'],
     ], function () {
         Route::get('info', InfoController::class)->name('info');
-        Route::apiSingleton('profile', ProfileController::class);
+        Route::apiResource('profile', ProfileController::class);
 
         Route::apiResource('authors', AuthorController::class)->only('index', 'show');
         Route::apiResource('textbooks', TextbookController::class)->only('index', 'show');

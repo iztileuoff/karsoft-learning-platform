@@ -21,4 +21,12 @@ class ProfileController extends Controller
     {
         return new UserResource(tap($request->user())->update($request->validated()));
     }
+
+    public function destroy(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        $request->user()->delete();
+
+        return response()->ok();
+    }
 }
