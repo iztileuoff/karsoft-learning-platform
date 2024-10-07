@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function index(Request $request): UserResource
+    public function show(Request $request): UserResource
     {
         return new UserResource(
             $request->user()
