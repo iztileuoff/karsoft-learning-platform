@@ -29,6 +29,8 @@ Route::group([
 ], function () {
     Route::get('info', InfoController::class)->name('info');
     Route::apiSingleton('profile', ProfileController::class);
+    Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 
     Route::apiResource('authors', AuthorController::class)->only('index', 'show');
     Route::apiResource('textbooks', TextbookController::class)->only('index', 'show');
