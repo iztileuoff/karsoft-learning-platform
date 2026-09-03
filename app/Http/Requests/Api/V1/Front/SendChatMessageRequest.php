@@ -31,7 +31,7 @@ class SendChatMessageRequest extends FormRequest
             clientMessageId: $this->string('client_message_id') ?: (string) Str::uuid(),
             source:          $source,
             conversationId:  $this->integer('conversation_id') ?: null,
-            attachmentIds:   $this->array('attachment_ids') ?? [],
+            attachmentIds:   $this->input('attachment_ids', []),
         );
     }
 }
