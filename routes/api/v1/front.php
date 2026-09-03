@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Front\AuthorController;
+use App\Http\Controllers\Api\V1\Front\AiAttachmentController;
+use App\Http\Controllers\Api\V1\Front\GeminiChatController;
 use App\Http\Controllers\Api\V1\Front\DistrictController;
 use App\Http\Controllers\Api\V1\Front\InfoController;
 use App\Http\Controllers\Api\V1\Front\LessonController;
@@ -43,4 +45,13 @@ Route::group([
     Route::apiResource('rating/users', RatingUserController::class)->only('index');
     Route::apiResource('rating/tests', RatingTestController::class)->only('index');
     Route::apiResource('reviews', ReviewController::class);
+
+    Route::prefix('chat')->name('chat.')->group(function () {
+        Route::get('/', [GeminiChatController::class, 'index'])->name('index');
+        Route::post('/', [GeminiChatController::class, 'store'])->name('store');
+        Route::get('{conversation}', [GeminiChatController::class, 'show'])->name('show');
+        Route::delete('{conversation}', [GeminiChatController::class, 'destroy'])->name('destroy');
+
+        Route::post('attachments', [AiAttachmentController::class, 'store'])->name('attachments.store');
+    });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Contracts\Ai\ChatClientInterface;
 use App\Events\AuthorChanged;
 use App\Events\LessonChanged;
 use App\Events\TextbookChanged;
@@ -10,6 +11,7 @@ use App\Listeners\InvalidateLessonCache;
 use App\Listeners\InvalidateTextbookCache;
 use App\Models\Test;
 use App\Policies\TestPolicy;
+use App\Services\Ai\GeminiClient;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
@@ -22,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(ChatClientInterface::class, GeminiClient::class);
+
         Response::macro('success', function ($data, $message = null) {
             return response()->json([
                 'message' => $message != null ? $message : __('http-statuses.200'),

@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\Ai\GeminiException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -23,5 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (GeminiException $e) {
+            return response()->json(['message' => $e->getMessage()], 502);
+        });
     })->create();

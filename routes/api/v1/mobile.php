@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\V1\Front\TextbookController;
 use App\Http\Controllers\Api\V1\Mobile\AnswerController;
+use App\Http\Controllers\Api\V1\Mobile\AiAttachmentController;
+use App\Http\Controllers\Api\V1\Mobile\GeminiChatController;
 use App\Http\Controllers\Api\V1\Mobile\AuthorController;
 use App\Http\Controllers\Api\V1\Mobile\DistrictController;
 use App\Http\Controllers\Api\V1\Mobile\InfoController;
@@ -50,6 +52,15 @@ Route::group([
         Route::apiResource('presentations', PresentationController::class)->only('index', 'show');
         Route::apiResource('rating/tests', RatingTestController::class)->only('index');
         Route::apiResource('reviews', ReviewController::class);
+
+        Route::prefix('chat')->name('chat.')->group(function () {
+            Route::get('/', [GeminiChatController::class, 'index'])->name('index');
+            Route::post('/', [GeminiChatController::class, 'store'])->name('store');
+            Route::get('{conversation}', [GeminiChatController::class, 'show'])->name('show');
+            Route::delete('{conversation}', [GeminiChatController::class, 'destroy'])->name('destroy');
+
+            Route::post('attachments', [AiAttachmentController::class, 'store'])->name('attachments.store');
+        });
     });
 });
 

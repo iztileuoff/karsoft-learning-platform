@@ -9,8 +9,7 @@ class AlwaysAcceptJsonMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $request->header('Accept', 'application/json');
-        $request->header('Content-Type', 'application/json');
+        $request->headers->set('Accept', 'application/json');
 
         return $next($request);
     }
