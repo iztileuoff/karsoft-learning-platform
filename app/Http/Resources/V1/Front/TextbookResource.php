@@ -17,6 +17,8 @@ class TextbookResource extends JsonResource
             'description' => $this->description,
             'degree_id' => $this->degree_id,
             'degree' => new DegreeResource($this->whenLoaded('degree')),
+            'subject_id' => $this->subject_id,
+            'subject' => new SubjectResource($this->whenLoaded('subject')),
             'language' => $this->language,
             'file' => new MediaResource($this->getFirstMedia('file')),
             'image_url' => $this->getFirstMediaUrl('image'),

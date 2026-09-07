@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Ai\PruneAiHistory;
+use Illuminate\Support\Facades\Storage;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(ChatClientInterface::class, GeminiClient::class);
+        $this->app->bind(PruneAiHistory::class, fn () => new PruneAiHistory(
+        Storage::disk(config('gemini.attachment_disk', 'public'))
+));
 
         Response::macro('success', function ($data, $message = null) {
             return response()->json([

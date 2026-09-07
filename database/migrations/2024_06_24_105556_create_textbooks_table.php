@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->text('description');
             $table->foreignId('degree_id')->nullable()->constrained()->nullOnDelete();
             $table->string('language');
+            $table->foreignId('subject_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

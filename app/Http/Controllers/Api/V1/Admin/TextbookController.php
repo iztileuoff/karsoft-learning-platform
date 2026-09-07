@@ -18,7 +18,17 @@ class TextbookController extends Controller
 {
     public function index(Request $request): TextbookCollection
     {
-        $textbooks = Textbook::with('media', 'degree')->get();
+        $validated = $request->validate([
+            'subject_id' => ['nullable', 'integer', 'exists:subjects,id'],
+        ]);
+
+        $textbooks = Textbook::query()
+            ->with(['media', 'degree', 'subject'])
+            ->when(
+                $validated['subject_id'] ?? null,
+                fn ($query, $subjectId) => $query->where('subject_id', $subjectId)
+            )
+            ->paginate(20);
 
         return new TextbookCollection($textbooks);
     }

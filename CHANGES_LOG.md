@@ -4,6 +4,22 @@ All code modifications made to this project are recorded here in chronological o
 
 ---
 
+## 2026-09-07 — Subjects jadvaliga Informatika va Matematika qo'shildi
+
+### Yangi fayllar (created)
+
+**`database/seeders/V1/SubjectSeeder.php`**
+- `firstOrCreate` orqali "Informatika" va "Matematika" yozuvlarini qo'shadigan seeder yaratildi
+
+### O'zgartirilgan fayllar (modified)
+
+**`database/seeders/DatabaseSeeder.php`**
+- `SubjectSeeder::class` import va `$this->call()` ro'yxatiga qo'shildi
+
+**Sabab:** Subjects jadvalini boshlang'ich ma'lumot bilan to'ldirish kerak edi.
+
+---
+
 ## 2026-09-02 — Gemini Flash Chat API integratsiyasi
 
 ### Yangi fayllar (created)
@@ -200,3 +216,41 @@ Route::get('/', function () {
 The root route `/` was explicitly throwing a `NotFoundHttpException`, which caused every request to `http://127.0.0.1:8000/` to return a 404. The route was also incorrectly named `login`, which would cause Laravel's auth middleware to redirect unauthenticated users into a 404 instead of a real login page. Since this is an API-only project (all real routes live under `routes/api/`), the root was fixed to return a JSON welcome response. The now-unused `NotFoundHttpException` import was also removed.
 
 ---
+
+---
+
+## 2026-09-07
+
+### CREATED: `app/Console/Commands/AiPruneHistoryCommand.php`
+**Type:** New file
+
+**Reasoning:**
+Eski `routes/console.php` dagi anonymous `Schedule::call` faqat DB yozuvlarini o'chirardi — storage dagi fizik fayllar va `ai_attachments` yozuvlari qolib ketardi. Dedicated Artisan command yaratildi:
+1. Eski conversationlar ga tegishli attachment pathlarini oladi
+2. Conversationlarni o'chiradi (cascade: ai_messages ham o'chadi, ai_attachments.ai_message_id NULL bo'ladi)
+3. Storage::disk('public') dan fizik fayllarni o'chiradi
+4. `ai_message_id IS NULL` bo'lgan orphaned attachment yozuvlari va ularning fayllarini ham tozalaydi
+
+---
+
+### UPDATED: `routes/console.php`
+**Type:** Refactor
+
+**Before:**
+```php
+use App\Models\AiConversation;
+...
+Schedule::call(function () {
+    $months = config('gemini.history_months', 1);
+    AiConversation::where('last_message_at', '<', now()->subMonths($months))
+        ->orWhere(...)->delete();
+})->daily()->name('ai:prune-history');
+```
+
+**After:**
+```php
+Schedule::command('ai:prune-history')->daily()->name('ai:prune-history')->withoutOverlapping();
+```
+
+**Reasoning:**
+Anonymous closure o'rniga dedicated Artisan command ishlatildi. `withoutOverlapping()` qo'shildi — agar avvalgi run hali tugamagan bo'lsa, yangi run boshlanmaydi.

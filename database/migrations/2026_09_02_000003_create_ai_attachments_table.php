@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('size')->default(0);
             $table->timestamps();
 
-            $table->index('user_id');
+            $table->index(['created_at', 'ai_message_id']);
         });
     }
 

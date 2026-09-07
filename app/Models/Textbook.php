@@ -18,6 +18,7 @@ class Textbook extends Model implements HasMedia
         'description',
         'degree_id',
         'language',
+        'subject_id',
     ];
 
     protected function casts(): array
@@ -27,11 +28,17 @@ class Textbook extends Model implements HasMedia
             'description' => 'string',
             'degree_id' => 'int',
             'language' => LanguagesEnum::class,
+            'subject_id' => 'int',
         ];
     }
 
     public function degree(): BelongsTo
     {
         return $this->belongsTo(Degree::class);
+    }
+
+    public function subject(): BelongsTo
+    {
+        return $this->belongsTo(Subject::class);
     }
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\V1\Admin\SchoolController;
 use App\Http\Controllers\Api\V1\Admin\TestController;
 use App\Http\Controllers\Api\V1\Admin\TextbookController;
 use App\Http\Controllers\Api\V1\Admin\UserController;
+use App\Http\Controllers\Api\V1\Admin\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -25,6 +26,7 @@ Route::group([
     'as' => 'admin.',
     'middleware' => ['auth:sanctum', 'ability:admin'],
 ], function () {
+    Route::get('subjects', SubjectController::class)->name('subjects');
     Route::apiSingleton('profile', ProfileController::class);
 
     Route::apiResource('schools', SchoolController::class);

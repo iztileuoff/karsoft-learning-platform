@@ -7,15 +7,23 @@ use App\Http\Resources\V1\Front\TextbookCollection;
 use App\Http\Resources\V1\Front\TextbookResource;
 use App\Models\Textbook;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+// use Illuminate\Support\Facades\Cache;
 
 class TextbookController extends Controller
 {
     public function index(Request $request): TextbookCollection
     {
-        $textbooks = Cache::remember('textbooks', now()->addHour(), function () {
-            return Textbook::with('media', 'degree')->get();
-        });
+        $validated = $request->validate([
+            'subject_id' => ['nullable', 'integer', 'exists:subjects,id'],
+        ]);
+
+        $textbooks = Textbook::query()
+            ->with(['media', 'degree', 'subject'])
+            ->when(
+                $validated['subject_id'] ?? null,
+                fn ($query, $subjectId) => $query->where('subject_id', $subjectId)
+            )
+            ->paginate(20);
 
         return new TextbookCollection($textbooks);
     }

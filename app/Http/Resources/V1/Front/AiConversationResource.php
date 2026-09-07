@@ -14,6 +14,7 @@ class AiConversationResource extends JsonResource
             'id'              => $this->id,
             'title'           => $this->title,
             'source'          => $this->source,
+            'conversation_id' => $this->conversation_id,
             'last_message_at' => $this->last_message_at?->format('Y-m-d H:i:s'),
             'messages'        => AiMessageResource::collection($this->whenLoaded('messages')),
             'created_at'      => $this->created_at?->format('Y-m-d H:i:s'),

@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('source', 20)->default('front');
             $table->string('title', 100)->nullable();
-            $table->timestamp('last_message_at')->nullable();
+            $table->timestamp('last_message_at')->nullable(false)->change();
             $table->timestamps();
 
             $table->index(['user_id', 'last_message_at']);

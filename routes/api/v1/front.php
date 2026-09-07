@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\V1\Front\TestController;
 use App\Http\Controllers\Api\V1\Front\TestQuestionController;
 use App\Http\Controllers\Api\V1\Front\TextbookController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\Front\SubjectController;
 
 Route::get('posts', PostController::class)->name('posts');
 Route::get('regions', RegionController::class)->name('regions');
@@ -30,6 +31,7 @@ Route::group([
     'middleware' => ['auth:sanctum', 'ability:front'],
 ], function () {
     Route::get('info', InfoController::class)->name('info');
+    Route::get('subjects', SubjectController::class)->name('subjects');
     Route::apiSingleton('profile', ProfileController::class);
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
