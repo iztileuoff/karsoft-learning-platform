@@ -16,22 +16,22 @@ class SendChatMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'message'           => ['required', 'string', 'max:10000'],
-            'conversation_id'   => ['nullable', 'integer', 'exists:ai_conversations,id'],
+            'message' => ['required', 'string', 'max:10000'],
+            'conversation_id' => ['nullable', 'integer', 'exists:ai_conversations,id'],
             'client_message_id' => ['nullable', 'string', 'max:100'],
-            'attachment_ids'    => ['nullable', 'array'],
-            'attachment_ids.*'  => ['integer'],
+            'attachment_ids' => ['nullable', 'array'],
+            'attachment_ids.*' => ['integer'],
         ];
     }
 
     public function toData(string $source = 'front'): SendChatMessageData
     {
         return new SendChatMessageData(
-            message:         $this->string('message'),
-            clientMessageId: $this->string('client_message_id') ?: (string) Str::uuid(),
-            source:          $source,
-            conversationId:  $this->integer('conversation_id') ?: null,
-            attachmentIds:   $this->input('attachment_ids', []),
+            message: $this->string('message'),
+            clientMessageId: (string) $this->string('client_message_id') ?: (string) Str::uuid(),
+            source: $source,
+            conversationId: $this->integer('conversation_id') ?: null,
+            attachmentIds: $this->input('attachment_ids', []),
         );
     }
 }

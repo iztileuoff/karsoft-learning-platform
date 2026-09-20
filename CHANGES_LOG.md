@@ -254,3 +254,113 @@ Schedule::command('ai:prune-history')->daily()->name('ai:prune-history')->withou
 
 **Reasoning:**
 Anonymous closure o'rniga dedicated Artisan command ishlatildi. `withoutOverlapping()` qo'shildi — agar avvalgi run hali tugamagan bo'lsa, yangi run boshlanmaydi.
+
+---
+
+## 2026-09-20 — 1-qadam: Gemini kalit header'ga + ConnectionException + timeout/retry
+
+### Modified: `app/Exceptions/Ai/GeminiException.php`
+**Before:** `final class GeminiException extends RuntimeException {}`
+**After:** Named constructor'lar (`timeout`, `overloaded`, `quotaExceeded`), `httpStatus`, `errorCode` property'lari qo'shildi.
+**Reasoning:** Turli Gemini xato turlari uchun to'g'ri HTTP status va machine-readable `code` (ai_timeout, ai_overloaded, ai_quota_exceeded) qaytarish uchun.
+
+### Modified: `app/Services/Ai/GeminiClient.php`
+**Before:** `->post("{$endpoint}?key={$apiKey}", ...)`, 3 urinish, 60s timeout, ConnectionException ushlashsiz.
+**After:** `->withHeaders(['x-goog-api-key' => ...])`, 2 urinish, 30s timeout, 10s connectTimeout, 429 retry yo'q, ConnectionException → GeminiException::timeout().
+**Reasoning:** Kalit cURL xato matniga (logga) tushmasligi; 429 retry qilish quota'ni tezroq tugataveradi; timeout qisqartirildi — shared hosting DB ulanishini band qilmaslik uchun.
+
+### Modified: `config/gemini.php`
+**Before:** `'timeout' => 60` (bitta qiymat).
+**After:** `timeout=30`, `connect_timeout=10`, `retry_delay=3` qo'shildi (env orqali boshqariladi).
+**Reasoning:** Testlarda `retry_delay=0` qilib uxlamaslik uchun; production'da mustaqil tuning imkoniyati.
+
+### Modified: `bootstrap/app.php`
+**Before:** `response()->json(['message' => ...], 502)` — har doim 502.
+**After:** `['message' => ..., 'code' => ...]` + `$e->getHttpStatus()` — 502/503/504 to'g'ri kodlar.
+**Reasoning:** Klient xato turini (quota/overload/timeout) farqlay olishi uchun.
+
+### Created: `tests/Feature/Ai/GeminiClientTest.php`
+8 test: header tekshiruvi, ConnectionException→504, 429→503(no retry), 503→retry→503, 503→retry→success, bo'sh javob.
+
+---
+
+## 2026-09-20 — 2-qadam: Telescope production'da o'chirildi
+
+### Modified: `config/telescope.php`
+**Before:** `'enabled' => env('TELESCOPE_ENABLED', true)`
+**After:** `'enabled' => env('TELESCOPE_ENABLED', false)`
+**Reasoning:** Production'da TELESCOPE_ENABLED o'rnatilmasa ham Telescope o'chirilgan bo'lishi kerak.
+
+### Modified: `bootstrap/providers.php`
+**Before:** `TelescopeServiceProvider::class` doim ro'yxatda.
+**After:** Ro'yxatdan olib tashlandi — shartli holda AppServiceProvider ichidan register qilinadi.
+
+### Modified: `app/Providers/AppServiceProvider.php`
+**Added:** `register()` da `if (local && telescope.enabled) { register(TelescopeServiceProvider) }`.
+**Reasoning:** Provider faqat `APP_ENV=local` va `TELESCOPE_ENABLED=true` da yuklanadi — production'da DB yozuvlari bo'lmaydi.
+
+### Modified: `routes/console.php`
+**Added:** `telescope:prune --hours=48` schedule (faqat telescope yoqilganda, `03:30` da).
+**Reasoning:** Prune bo'lmasa telescope_entries cheksiz o'sgan bo'lar edi.
+
+### Modified: `.env.example`
+**Added:** `TELESCOPE_ENABLED=false` — production server uchun to'g'ri default.
+
+### Created: `tests/Feature/Ai/TelescopeConfigTest.php`
+3 test: config default falsy, testing muhitida provider yuklanmagan, local emas muhitda enabled=true bo'lsa ham yuklanmaydi.
+
+---
+
+## 2026-09-20 — 3-qadam: Session muammosi tahlili va SESSION_DRIVER tavsiyasi
+
+### Tahlil natijasi (kod o'zgartirilmadi)
+- API route'larida (`routes/api/v1/`) `StartSession` middleware hech qachon bo'lmagan — muammo allaqachon to'g'ri edi.
+- `sessions` jadvalidagi DB so'rovlar Telescope'ning `web` middleware guruhidan kelgan (2-qadamda tuzatildi).
+- `SANCTUM_STATEFUL_DOMAINS` o'rnatilmagan → Sanctum stateful auth ishlamaydi → qo'shimcha session yo'q.
+
+### Modified: `.env.example`
+**Before:** `SESSION_DRIVER=database`
+**After:** `SESSION_DRIVER=file` (izoh bilan)
+**Reasoning:** App sof API, sessions ishlatilmaydi. `file` driveri MySQL yukini kamaytiradi.
+
+---
+
+## 2026-09-20 — 5-qadam: Throttle (ai-chat, 10/daqiqa)
+
+### Modified: `app/Providers/AppServiceProvider.php`
+**Added (boot):** `RateLimiter::for('ai-chat', ...)` — 10/daqiqa, user ID bo'yicha (IP fallback), `Limit::response()` bilan JSON `{code: rate_limit_exceeded}`.
+**Reasoning:** ThrottleRequestsException tashlanmaydi — Limit::response() to'g'ridan-to'g'ri 429 qaytaradi, Retry-After headerlari saqlanadi.
+
+### Modified: `routes/api/v1/front.php`, `routes/api/v1/mobile.php`
+**Added:** `->middleware('throttle:ai-chat')` faqat `store` route'da.
+**Reasoning:** Suhbat ro'yxati va ko'rish throttle'ga tushmasin — faqat xabar yuborish cheklandi.
+
+### Modified: `.env.example`
+**Added:** `CACHE_STORE=file` (tavsiya) — throttle cache'ni DB'dan fayl tizimiga ko'chiradi, MySQL yukini kamaytiradi.
+
+### Created: `tests/Feature/Ai/AiChatThrottleTest.php`
+4 test: limiter ro'yxatda, 10/min limit, rate_limit_exceeded kodi, IP fallback.
+
+---
+
+## 2026-09-20 — 6-qadam: Idempotentlik, parallel himoya, Stringable bug
+
+### Modified: `app/Http/Requests/Api/V1/Front/SendChatMessageRequest.php`
+**Before:** `$this->string('client_message_id') ?: uuid` (Stringable doim truthy → uuid hech qachon ishlamagan)
+**After:** `(string) $this->string('client_message_id') ?: uuid`
+
+### Modified: `app/Actions/Ai/SendChatMessageAction.php`
+To'liq qayta yozildi. Asosiy o'zgarishlar:
+- `resolveState()`: lockForUpdate bilan bitta short transaction — barcha holatlar ichida hal qilinadi
+- `freshRequest()`: unique 1062 xato ushlash + re-read (parallel race himoyasi)
+- `claimFailed()`: Failed → Pending, Gemini'ga boradi
+- `claimOrRejectPending()`: updated_at < 120s → 409; >=120s → stale, qayta urinadi
+- `callGemini()`: Gemini chaqiruvi transaksiyadan tashqarida, xato → Failed
+
+**Reasoning:**
+- Eski kod: `existingReply()` faqat Completed ni tekshirardi, Failed holati unique constraint'ga urilardi
+- Yangi kod: barcha holatlar (Completed/Failed/Pending/stale) lockForUpdate ichida atomik boshqariladi
+- Parallel so'rovlar: 1062 ushlash + 409 bilan toza hal qilinadi
+
+### Created: `tests/Feature/Ai/SendChatMessageActionTest.php`
+6 test (DatabaseTransactions): fresh, duplicate, failure→failed, retry after failed, pending→409, stale→retry.

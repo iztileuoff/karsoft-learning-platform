@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Front\TextbookController;
-use App\Http\Controllers\Api\V1\Mobile\AnswerController;
 use App\Http\Controllers\Api\V1\Mobile\AiAttachmentController;
-use App\Http\Controllers\Api\V1\Mobile\GeminiChatController;
+use App\Http\Controllers\Api\V1\Mobile\AnswerController;
 use App\Http\Controllers\Api\V1\Mobile\AuthorController;
 use App\Http\Controllers\Api\V1\Mobile\DistrictController;
+use App\Http\Controllers\Api\V1\Mobile\GeminiChatController;
 use App\Http\Controllers\Api\V1\Mobile\InfoController;
 use App\Http\Controllers\Api\V1\Mobile\LessonController;
 use App\Http\Controllers\Api\V1\Mobile\PostController;
@@ -55,7 +55,7 @@ Route::group([
 
         Route::prefix('chat')->name('chat.')->group(function () {
             Route::get('/', [GeminiChatController::class, 'index'])->name('index');
-            Route::post('/', [GeminiChatController::class, 'store'])->name('store');
+            Route::post('/', [GeminiChatController::class, 'store'])->name('store')->middleware('throttle:ai-chat');
             Route::get('{conversation}', [GeminiChatController::class, 'show'])->name('show');
             Route::delete('{conversation}', [GeminiChatController::class, 'destroy'])->name('destroy');
 
@@ -63,4 +63,3 @@ Route::group([
         });
     });
 });
-

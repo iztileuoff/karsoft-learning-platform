@@ -13,3 +13,10 @@ Schedule::command('ai:prune-history')
     ->dailyAt('03:10')
     ->name('ai:prune-history')
     ->withoutOverlapping(30);
+
+if (config('telescope.enabled', false)) {
+    Schedule::command('telescope:prune --hours=48')
+        ->dailyAt('03:30')
+        ->name('telescope:prune')
+        ->withoutOverlapping(30);
+}

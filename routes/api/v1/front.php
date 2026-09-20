@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Front\AuthorController;
 use App\Http\Controllers\Api\V1\Front\AiAttachmentController;
-use App\Http\Controllers\Api\V1\Front\GeminiChatController;
+use App\Http\Controllers\Api\V1\Front\AuthorController;
 use App\Http\Controllers\Api\V1\Front\DistrictController;
+use App\Http\Controllers\Api\V1\Front\GeminiChatController;
 use App\Http\Controllers\Api\V1\Front\InfoController;
 use App\Http\Controllers\Api\V1\Front\LessonController;
 use App\Http\Controllers\Api\V1\Front\PostController;
@@ -15,12 +15,12 @@ use App\Http\Controllers\Api\V1\Front\RatingUserController;
 use App\Http\Controllers\Api\V1\Front\RegionController;
 use App\Http\Controllers\Api\V1\Front\ReviewController;
 use App\Http\Controllers\Api\V1\Front\SchoolController;
+use App\Http\Controllers\Api\V1\Front\SubjectController;
 use App\Http\Controllers\Api\V1\Front\TestAnswerController;
 use App\Http\Controllers\Api\V1\Front\TestController;
 use App\Http\Controllers\Api\V1\Front\TestQuestionController;
 use App\Http\Controllers\Api\V1\Front\TextbookController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Front\SubjectController;
 
 Route::get('posts', PostController::class)->name('posts');
 Route::get('regions', RegionController::class)->name('regions');
@@ -34,7 +34,6 @@ Route::group([
     Route::get('subjects', SubjectController::class)->name('subjects');
     Route::apiSingleton('profile', ProfileController::class);
     Route::delete('profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 
     Route::apiResource('authors', AuthorController::class)->only('index', 'show');
     Route::apiResource('textbooks', TextbookController::class)->only('index', 'show');
@@ -50,7 +49,7 @@ Route::group([
 
     Route::prefix('chat')->name('chat.')->group(function () {
         Route::get('/', [GeminiChatController::class, 'index'])->name('index');
-        Route::post('/', [GeminiChatController::class, 'store'])->name('store');
+        Route::post('/', [GeminiChatController::class, 'store'])->name('store')->middleware('throttle:ai-chat');
         Route::get('{conversation}', [GeminiChatController::class, 'show'])->name('show');
         Route::delete('{conversation}', [GeminiChatController::class, 'destroy'])->name('destroy');
 

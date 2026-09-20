@@ -5,58 +5,69 @@ namespace App\Services\Ai;
 use App\Contracts\Ai\ChatClientInterface;
 use App\DTO\Ai\GeminiResponseData;
 use App\Exceptions\Ai\GeminiException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
 final class GeminiClient implements ChatClientInterface
 {
     private const RETRYABLE_PHRASES = ['high demand', 'temporarily unavailable', 'overloaded'];
 
+    private const MAX_ATTEMPTS = 2;
+
     public function generate(array $messages, string $systemPrompt): GeminiResponseData
     {
-        $model    = config('gemini.model');
-        $endpoint = rtrim(config('gemini.endpoint'), '/') . "/{$model}:generateContent";
-        $apiKey   = config('gemini.api_key');
+        $model = config('gemini.model');
+        $endpoint = rtrim(config('gemini.endpoint'), '/')."/{$model}:generateContent";
 
         $payload = [
             'system_instruction' => [
                 'parts' => [['text' => $systemPrompt]],
             ],
-            'contents'         => $messages,
+            'contents' => $messages,
             'generationConfig' => [
                 'maxOutputTokens' => 8192,
             ],
         ];
 
-        $maxAttempts = 3;
-        $start       = microtime(true);
-        $response    = null;
+        $start = microtime(true);
+        $response = null;
 
-        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
-            $response = Http::timeout(config('gemini.timeout', 60))
-                ->post("{$endpoint}?key={$apiKey}", $payload);
+        try {
+            for ($attempt = 1; $attempt <= self::MAX_ATTEMPTS; $attempt++) {
+                $response = Http::timeout(config('gemini.timeout', 30))
+                    ->connectTimeout(config('gemini.connect_timeout', 10))
+                    ->withHeaders(['x-goog-api-key' => config('gemini.api_key')])
+                    ->post($endpoint, $payload);
 
-            if ($response->successful()) {
-                break;
+                if ($response->successful()) {
+                    break;
+                }
+
+                $status = $response->status();
+                $errorMessage = $response->json('error.message') ?? '';
+
+                if ($status === 429) {
+                    throw GeminiException::quotaExceeded($errorMessage);
+                }
+
+                $isRetryable = in_array($status, [503, 504])
+                    || $this->isRetryableMessage($errorMessage);
+
+                if (! $isRetryable || $attempt === self::MAX_ATTEMPTS) {
+                    throw $isRetryable
+                        ? GeminiException::overloaded($errorMessage)
+                        : new GeminiException('Gemini API xatosi: '.($errorMessage ?: "HTTP {$status}"));
+                }
+
+                sleep(config('gemini.retry_delay', 3));
             }
-
-            $errorMessage = $response->json('error.message') ?? '';
-            $isRetryable  = $response->status() >= 500
-                || in_array($response->status(), [429])
-                || $this->isRetryableMessage($errorMessage);
-
-            if (! $isRetryable || $attempt === $maxAttempts) {
-                $display = $errorMessage ?: "HTTP {$response->status()}";
-                throw new GeminiException("Gemini API xatosi: {$display}");
-            }
-
-            // exponential backoff: 2s, 4s
-            usleep($attempt * 2_000_000);
+        } catch (ConnectionException $e) {
+            throw GeminiException::timeout($e);
         }
 
         $latencyMs = (int) ((microtime(true) - $start) * 1000);
 
         $data = $response->json();
-
         $text = $data['candidates'][0]['content']['parts'][0]['text'] ?? '';
 
         if ($text === '') {
@@ -64,13 +75,13 @@ final class GeminiClient implements ChatClientInterface
         }
 
         return new GeminiResponseData(
-            text:             $text,
-            model:            $data['modelVersion'] ?? $model,
-            promptTokens:     $data['usageMetadata']['promptTokenCount'] ?? 0,
+            text: $text,
+            model: $data['modelVersion'] ?? $model,
+            promptTokens: $data['usageMetadata']['promptTokenCount'] ?? 0,
             completionTokens: $data['usageMetadata']['candidatesTokenCount'] ?? 0,
-            totalTokens:      $data['usageMetadata']['totalTokenCount'] ?? 0,
-            finishReason:     $data['candidates'][0]['finishReason'] ?? 'UNKNOWN',
-            latencyMs:        $latencyMs,
+            totalTokens: $data['usageMetadata']['totalTokenCount'] ?? 0,
+            finishReason: $data['candidates'][0]['finishReason'] ?? 'UNKNOWN',
+            latencyMs: $latencyMs,
         );
     }
 
@@ -82,6 +93,7 @@ final class GeminiClient implements ChatClientInterface
                 return true;
             }
         }
+
         return false;
     }
 }
